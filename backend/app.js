@@ -10,7 +10,7 @@ import usersRoutes from './src/routes/usersRoutes.js'
 
 const app = express()
 
-//Sets
+//Set
 app.set('port', process.env.PORT || 3001)
 
 //Middlewares

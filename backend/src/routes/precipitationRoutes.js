@@ -11,7 +11,7 @@ router.post('/', (req, res)=>{
 });
 
 router.delete('/:id', (req, res)=>{
-    res.send('delete precipitation')
+    res.send('delete precipitatio')
 });
 
 router.put('/:id', (req, res)=>{

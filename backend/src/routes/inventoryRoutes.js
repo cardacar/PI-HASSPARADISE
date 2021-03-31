@@ -1,21 +1,21 @@
 import { Router } from 'express';
 
-const router =  Router();
+const router = Router();
 
 router.get('/', (req, res)=>{
-    res.send('get Fumigation')
+    res.send('Get Inventory')
 });
 
 router.post('/', (req, res)=>{
-    res.send('post Fumigation')
+    res.send('post Inventor')
 });
 
 router.delete('/:id', (req, res)=>{
-    res.send('delete Fumigation')
+    res.send('delete Inventory')
 });
 
 router.put('/:id', (req, res)=>{
-    res.send('put Fumigation')
+    res.send('put Inventory')
 });
 
 export default router;
