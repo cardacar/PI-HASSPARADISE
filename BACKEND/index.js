@@ -1,7 +1,5 @@
-const express = require('express')
+import app from './app.js';
 
-const app = express();
-
-app.listen(3000, ()=>{
-    console.log('app corriendo en el puerto 3000')
+app.listen(app.get('port'), ()=>{
+    console.log(`Backend on port ${app.get('port')}`)
 })
