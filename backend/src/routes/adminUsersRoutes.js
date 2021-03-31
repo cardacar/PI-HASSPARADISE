@@ -3,19 +3,19 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', (req, res)=>{
-    res.send('Get precipitation')
+    res.send('Get Users')
 });
 
 router.post('/', (req, res)=>{
-    res.send('post precipitation')
+    res.send('post Users')
 });
 
 router.delete('/:id', (req, res)=>{
-    res.send('delete precipitation')
+    res.send('delete Users')
 });
 
 router.put('/:id', (req, res)=>{
-    res.send('put precipitation')
+    res.send('put Users')
 });
 
 export default router;
