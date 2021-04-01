@@ -1,0 +1,11 @@
+###
+POST http://localhost:3001/fertilization
+Content-Type: application/json
+
+{
+    "hola": "hla"
+
+}
+
+###
+GET http://localhost:3001/fertilization
