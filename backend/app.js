@@ -8,9 +8,9 @@ import inventoryRoutes from './src/routes/inventoryRoutes.js'
 import precipitationRoutes from './src/routes/precipitationRoutes.js'
 //import adminUsersRoutes from './src/routes/adminUsersRoutes.js'
 import usersRoutes from './src/routes/usersRoutes.js'
+import adminUsersRoutes from "./src/routes/adminUsersRoutes.js";
 
-import './src/database/db.js'
-import adminUsersRoutes from "./src/routes/adminUsersRoutes";
+
 
 
 const app = express()
@@ -43,6 +43,6 @@ app.use('hsp/precipitation', precipitationRoutes);
 //app.use('hsp/adminUsers', adminUsersRoutes);
 app.use('hsp/users', usersRoutes);
 
-app.use('hsp/adminUsers', adminUsersRoutes);
+app.use('/hsp/adminUsers', adminUsersRoutes);
 
 export default app;

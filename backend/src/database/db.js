@@ -16,5 +16,6 @@ conexion.connect(function(error){
 });
 
 
+
 export default conexion;
 
