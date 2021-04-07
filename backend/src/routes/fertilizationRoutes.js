@@ -8,6 +8,7 @@ router.get('/', (req,res)=>{
 
 router.post('/', (req, res)=>{
     res.send('post fertilization')
+    console.log(req.body)
 });
 
 router.delete('/:id', (req, res)=>{
