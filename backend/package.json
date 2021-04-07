@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/cardacar/PI-HASSPARADISE#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "express-session": "^1.17.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
