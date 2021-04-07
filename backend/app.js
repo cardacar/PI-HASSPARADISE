@@ -1,5 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
+import session from 'express-session'
 import fertilizationRoutes from './src/routes/fertilizationRoutes.js'
 import fumigationRoutes from './src/routes/fumigationRoutes.js'
 import inventoryRoutes from './src/routes/inventoryRoutes.js'
@@ -16,8 +18,15 @@ app.set('port', process.env.PORT || 3001)
 //Middlewares
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
-
+//Config
+dotenv.config({path: './.env'});
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}))
 
 //Routes
 app.get('/', (req,res)=>{
