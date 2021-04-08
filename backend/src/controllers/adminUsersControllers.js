@@ -1,7 +1,20 @@
 import conexion from '../database/db.js'
 
-export const addUser = async (req,res)=> {
-    await conexion.query("INSERT INTO `hasspabd`.`usuarios` (`idUsuarios`, `pass`, `nombre`, `apellido`, `fechaNacimiento`) VALUES ('2', '123', 'sdasd', 'asdasd', '1998-08-04')")
+export const addUser = (req,res)=> {
+    const {name1, password, idUser, date} = req.body
+    conexion.query("INSERT INTO hasspabd.usuarios (`idUsuarios`, `pass`, `nombre`, `apellido`, `fechaNacimiento`) VALUES (?, ?, ?, ?, ?)",
+    [name1,password,idUser,date],
+    (err,result)=>{
+        if(err){
+            res.send({err:err})
+        }else{
+            res.send({message:"data received"})
+        }
+        
+    }
+    );
+
+
 }
 
 
