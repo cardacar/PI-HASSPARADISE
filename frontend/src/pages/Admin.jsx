@@ -1,12 +1,13 @@
 import React from "react";
-import FormRegister from '../components/FormRegister';
+//import FormRegister from '../components/FormRegister';
+import Login from '../components/FormLogin'
 
 const Admin = () => {
   
 
   return (
       <div>
-          <FormRegister/>
+          <Login/>
       </div>
   )
 };

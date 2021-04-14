@@ -15,21 +15,19 @@ import Typography from "@material-ui/core/Typography";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import palette from "../styles/PaletteColors.js";
 import { useForm } from "react-hook-form";
-import axios from 'axios'
+import {getUserFetch} from '../services/LogIn.js'
 
 const FormLogin = () => {
-  //`http://localhost:3001/fertilization`
 
-/*   const [username, setusername] = useState("");
-  const [password, setpassword] = useState(""); */
-  const [loginStatus, setloginStatus] = useState("")
+  const baseUrl = 'http://localhost:3001/hsp/'
+  const [loginStatus, setloginStatus] = useState("") 
 
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
+   const onSubmit = (data) => {
     const username = data.username
     const password = data.password
-    axios.post('http://localhost:3001/hsp/users/logIn',{username,password})
+    getUserFetch(`${baseUrl}users/logIn`,{username,password})
     .then((response)=>{
       if(response.data.message){
         setloginStatus(response.data.message)
@@ -39,18 +37,6 @@ const FormLogin = () => {
     })
   };
 
-
-/*   const onSubmit2= (data)=>{
-    
-    axios.get('http://localhost:3001/hsp/users/logIn')
-    .then(response=>{
-      console.log(response.data)
-    })
-    .catch(e=>{
-      console.log(e)
-    })
-  }
- */
 
   const styles = useStyles();
   const theme = palette;

@@ -10,7 +10,7 @@ export const addUser = (req,res)=> {
         }else{
             res.send({message:"data received"})
         }
-        
+      console.log(result)  
     }
     );
 
