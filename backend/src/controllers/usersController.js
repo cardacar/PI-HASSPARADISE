@@ -26,7 +26,7 @@ export const logInUser = (req, res) => {
           }
         });
       } else {
-        res.send({ message: "El usuario no existe" });
+        res.send({ message: "El usuario no existe." });
       }
     }
   );
