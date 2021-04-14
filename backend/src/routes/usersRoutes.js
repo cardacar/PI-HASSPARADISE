@@ -3,11 +3,8 @@ import * as usersCtrl from '../controllers/usersController.js'
 
 const router = Router();
 
-router.get('/logIn', usersCtrl.getUser);
 
-router.get('/logOut', (req, res)=>{
-    res.send('LogOut')
-});
+
 
 router.post('/logIn', usersCtrl.logInUser);
 

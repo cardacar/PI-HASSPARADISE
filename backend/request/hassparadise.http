@@ -1,9 +1,10 @@
 ###
-POST http://localhost:3001/fertilization
+POST http://localhost:3001/hsp/users/logIn
 Content-Type: application/json
 
 {
-    "hola": "hla"
+    "id": "10",
+    "password":"hola123"
 
 }
 
