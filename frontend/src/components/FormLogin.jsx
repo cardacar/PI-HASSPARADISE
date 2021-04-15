@@ -20,19 +20,19 @@ import {getUserFetch} from '../services/LogIn.js'
 const FormLogin = () => {
 
   const baseUrl = 'http://localhost:3001/hsp/'
-  const [loginStatus, setloginStatus] = useState("") 
+  const [loginStatus, setloginStatus] = useState("")
 
   const { register, handleSubmit } = useForm();
 
    const onSubmit = (data) => {
-    const username = data.username
+    const id = data.id
     const password = data.password
-    getUserFetch(`${baseUrl}users/logIn`,{username,password})
+    getUserFetch(`${baseUrl}users/logIn`,{id,password})
     .then((response)=>{
       if(response.data.message){
         setloginStatus(response.data.message)
       }else{
-        setloginStatus(response.data[0].nombre)
+        setloginStatus(response.data.nombre)
       }
     })
   };
@@ -64,9 +64,9 @@ const FormLogin = () => {
                 margin="normal"
                 required
                 fullWidth
-                id="username"
+                id="id"
                 label="Ingrese por favor su cedula"
-                name="username"
+                name="id"
                 autoComplete="Cedula"
                 autoFocus
                 color="secondary"

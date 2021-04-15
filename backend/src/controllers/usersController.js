@@ -1,5 +1,7 @@
 import conexion from "../database/db.js";
 import bcrypt from "bcryptjs";
+
+
 export const getUser = async (req, res) => {
   res.json({ hola: "hola" });
 };
@@ -30,5 +32,4 @@ export const logInUser = (req, res) => {
       }
     }
   );
-  //conexion.end();
 };
