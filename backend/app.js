@@ -33,7 +33,7 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true  }))
 
 //Routes
 app.get('/', (req,res)=>{
-    res.send('Busca los endpoints xd')
+    res.send('Bienvenido a la API de HASSPARADISE')
 });
 
 app.use('/fertilization', fertilizationRoutes);
@@ -41,7 +41,6 @@ app.use('/hsp/fumigation', fumigationRoutes);
 app.use('/hsp/inventory', inventoryRoutes);
 app.use('/hsp/precipitation', precipitationRoutes);
 app.use('/hsp/users', usersRoutes);
-
 app.use('/hsp/adminUsers', adminUsersRoutes);
 
 export default app;

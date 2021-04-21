@@ -1,7 +1,10 @@
 import conexion from "../database/db.js";
 import bcrypt from "bcryptjs";
 export const getUser = async (req, res) => {
-  res.json({ hola: "hola" });
+  const {id, name, token} = req.body;
+  if(!token){
+    res.send({message:'Por favor'})
+  }
 };
 
 export const logInUser = (req, res) => {
