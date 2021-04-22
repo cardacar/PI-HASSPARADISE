@@ -101,3 +101,25 @@ export const postFertilization = (req, res) => {
     }
   );
 };
+
+//Eliminar un dato con el lote y el nombre del encargado
+export const deleteOneFertilization = (req,res)=>{
+    //Obtengo los datos pasados por el body con el token
+    //Y los datos del params pasado por la URL
+    const {id, nombre, apellido} = req.body;
+    const {lote} = req.params;
+    const fullName = `${nombre} ${apellido}`;
+    //Query para eliminar los datos
+    conexion.query(
+        "DELETE * FROM hasspabd.usuarios WHERE lote=? AND operarioEncargado = ? ;",
+        [fullName,lote],
+        (err, result)=>{
+            if(err){
+                res.send({err:err});
+            }else{
+                res.send({message:'dato eliminado'})
+            }
+
+        }
+    )
+}
