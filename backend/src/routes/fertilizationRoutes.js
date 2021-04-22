@@ -1,15 +1,14 @@
 import { Router } from 'express';
+import * as fertilizationCtrl from '../controllers/fertilizationControllers.js'
+import {userExtractor} from '../middleware/userExtractor.js';
 
 const router = Router();
 
-router.get('/', (req,res)=>{
-    res.send('Get fertilization')
-});
+router.get('/', userExtractor ,fertilizationCtrl.getDataUserFertilization);
 
-router.post('/', (req, res)=>{
-    res.send('post fertilization')
-    console.log(req.body)
-});
+router.get('/admin', userExtractor ,fertilizationCtrl.getAllDataFertilization);
+
+router.post('/', userExtractor, fertilizationCtrl.postFertilization);
 
 router.delete('/:id', (req, res)=>{
     res.send('delete fertilizatio')

@@ -14,6 +14,8 @@ import adminUsersRoutes from "./src/routes/adminUsersRoutes.js";
 
 const app = express()
 
+dotenv.config({path:'./.env'});
+
 //Set
 app.set('port', process.env.PORT || 3001)
 
@@ -23,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 //Config
-dotenv.config({path: './.env'});
+
 app.use(session({
     secret: 'secret',
     resave: true,
@@ -36,7 +38,7 @@ app.get('/', (req,res)=>{
     res.send('Bienvenido a la API de HASSPARADISE')
 });
 
-app.use('/fertilization', fertilizationRoutes);
+app.use('/hsp/fertilization', fertilizationRoutes);
 app.use('/hsp/fumigation', fumigationRoutes);
 app.use('/hsp/inventory', inventoryRoutes);
 app.use('/hsp/precipitation', precipitationRoutes);

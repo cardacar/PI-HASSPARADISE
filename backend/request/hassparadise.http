@@ -9,4 +9,18 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3001/fertilization
+GET http://localhost:3001/hsp/fertilization
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tYnJlIjoiZGFuaWVsIiwiYXBlbGxpZG8iOiJxdWlyb3MiLCJpYXQiOjE2MTkwNDEzMTl9.7awZCA3vM1L4aE1zrceD6z4GHcOyy0i8xu6gs1t7Wxw
+
+###
+POST http://localhost:3001/hsp/fertilization
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tYnJlIjoiZGFuaWVsIiwiYXBlbGxpZG8iOiJxdWlyb3MiLCJpYXQiOjE2MTkwNTE0ODB9.mfmxXS8FFmIKT0n1xaE2JCjEmJbvVU10DXiEx8XUyN4
+
+{
+    "lote":"1",
+    "producto":"H20",
+    "visitaTecnica":"2",
+    "observacion":"ninguna"
+}
