@@ -12,7 +12,7 @@ conexion.connect(function(error){
     if(error){
         throw error;
     }else{
-        console.log('LO LOGRAMOS CARLITOS')
+        console.log('Conexion a base de datos Exitosa')
     }
 });
 

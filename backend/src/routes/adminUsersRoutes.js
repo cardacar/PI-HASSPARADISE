@@ -1,20 +1,27 @@
 import { Router } from 'express';
 import * as adminUserCtrl from "../controllers/adminUsersControllers.js" 
+import conexion from '../database/db.js'
 
 const router = Router();
 
-router.get('/',(req, res)=>{
+/* router.get('/',(req, res)=>{
     res.send('No implementado')
-});
+}); */
 
 router.post('/register', adminUserCtrl.addUser);
 
-router.delete('/:id', (req, res)=>{
-    res.send('delete adminUsers')
-});
+router.delete('/:id', adminUserCtrl.deleteUser);
 
-router.put('/:id', (req, res)=>{
-    res.send('put adminUsers')
-});
+router.put('/:id', adminUserCtrl.updateUser);
+
+router.get('/:id', adminUserCtrl.getUser);
+
+router.get('/', adminUserCtrl.getAllUsers);
+
+
+
+/* router.get('/',(req, res) =>{
+    res.send('probando rutas')
+}) */
 
 export default router;

@@ -11,6 +11,11 @@ router.post('/logOut', (req, res)=>{
     res.send('post User')
 });
 
+router.post('/addUser', usersCtrl.addUser);
+
+router.post('/logOut', (req, res)=>{
+    res.send('post User')
+});
 
 
 export default router;
