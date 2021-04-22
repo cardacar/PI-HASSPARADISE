@@ -14,6 +14,10 @@ export const getUser = async (req, res) => {
   res.json({ hola: "hola" });
 };
 
+export const addUser =(req,res) => {
+
+}
+
 export const logInUser = (req, res) => {
   const { username, password } = req.body;
   conexion.query(
