@@ -3,8 +3,6 @@ import * as usersCtrl from '../controllers/usersController.js'
 
 const router = Router();
 
-
-
 router.post('/logIn', usersCtrl.logInUser);
 
 router.post('/logOut', (req, res)=>{
