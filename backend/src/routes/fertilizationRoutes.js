@@ -10,9 +10,7 @@ router.get('/admin', userExtractor ,fertilizationCtrl.getAllDataFertilization);
 
 router.post('/', userExtractor, fertilizationCtrl.postFertilization);
 
-router.delete('/:lote', (req, res)=>{
-    res.send('delete fertilizatio')
-});
+router.delete('/:lote', userExtractor, fertilizationCtrl.deleteOneFertilization);
 
 router.put('/:id', (req, res)=>{
     res.send('put fertilization')

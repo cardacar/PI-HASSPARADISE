@@ -2,8 +2,8 @@ POST http://localhost:3001/hsp/adminUsers/register
 content-type: application/json
 
 {
-    "idUsuario": "10284552",
-    "pass": "root",
+    "idUsuario": "102984552",
+    "pass": "1234",
     "nombre":"Periquito" ,
     "apellido": "piopio",
     "fechaNacimiento":"1992-10-18"

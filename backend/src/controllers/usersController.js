@@ -15,7 +15,7 @@ export const logInUser = (req, res) => {
       if (err) {
         res.send({ err: err });
       }
-      //Si el usuario existe procedos a comparar la contraseña con bcryp
+      //Si el usuario existe procedos a comparar la contraseña con bcryptjs
       if (result.length > 0) {
         bcrypt.compare(password, result[0].pass, (error, response) => {
           //Si la contraseña coincide con la de la bd envio los datos del usuario

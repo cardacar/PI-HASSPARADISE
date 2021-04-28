@@ -3,8 +3,8 @@ POST http://localhost:3001/hsp/users/logIn
 Content-Type: application/json
 
 {
-    "id": "4",
-    "password":"hola123"
+    "id": "10284552",
+    "password":"root"
 
 }
 

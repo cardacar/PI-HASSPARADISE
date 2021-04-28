@@ -3,6 +3,7 @@ import conexion from "../database/db.js";
 //Obtengo todos los datos de la tabla fertilizacion
 export const getAllDataFertilization = (req,res)=>{
     //Creo objeto para guardar los datos recibidos
+    
     let data = {}
     //Query que me trae todos los datos de la tabla
     conexion.query(
@@ -12,6 +13,7 @@ export const getAllDataFertilization = (req,res)=>{
             if(err){
                 res.send({error:error});
             }
+            
             //Si existe por lo menos un dato lo guardo en la variable data
             if(result.length>0) {
                 data = result

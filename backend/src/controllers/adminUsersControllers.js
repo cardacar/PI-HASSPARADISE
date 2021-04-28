@@ -9,8 +9,7 @@ export const addUser = (req,res)=> {
             res.send({err:err})
         }else{
             res.send({message:"New User added"})
-        }
-      console.log(result)  
+        } 
     }
     );
 }
@@ -24,8 +23,7 @@ export const deleteUser =(req,res)=> {
             res.send({err:err})
         }else{
             res.send({message:"User Deleted"})
-        }
-      console.log(result)  
+        } 
     })
 }
 

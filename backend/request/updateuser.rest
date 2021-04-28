@@ -1,10 +1,10 @@
-PUT  http://localhost:3001/hsp/adminUsers/1028312
+PUT  http://localhost:3001/hsp/adminUsers/1
 content-type: application/json
 
 {
     
-    "pass": "",
-    "nombre":"probandovoids" ,
-    "apellido": "",
-    "fechaNacimiento":"1992-10-18"
+    "pass": "1",
+    "nombre":"1" ,
+    "apellido": "1",
+    "fechaNacimiento":"1998-01-01"
 }
