@@ -1,0 +1,16 @@
+GET http://localhost:3001/api/hpd/fertilization
+
+###
+GET http://localhost:3001/api/hpd/fumigation
+
+###
+GET http://localhost:3001/api/hpd/inventory
+
+###
+GET http://localhost:3001/api/hpd/precipitation
+
+###
+GET http://localhost:3001/api/hpd/userAdmin
+
+###
+GET http://localhost:3001/api/hpd/user
