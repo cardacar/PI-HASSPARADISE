@@ -1,10 +1,9 @@
 import {Router} from 'express'
-import * as inventoryCtrl from '../controllers/inventoryController'
-
+import * as userCtrl from '../controllers/userAdminController';
 const router = Router();
 
 router.get('/',(req,res)=>{
-    res.json({success:'inventory'})
+    res.json({success:'admin users'})
 })
 
 export default router;
