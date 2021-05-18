@@ -64,7 +64,21 @@ export const updateUserById = async (req, res) => {
     //Obtengo el id del params
     const {userId} = req.params;
     //Busco y actualizo los datos del usuario
-    const userUpdate = await User.findByIdAndUpdate(userId, req.body,{new:true});
+    try {
+      userUpdate = await User.findByIdAndUpdate(userId, req.body,{new:true});
+    } catch (error) {//Si ocurre un error mando un mensaje e imprimo el error
+      console.log(error)
+      res.json({message:"Usuario no actualizado"})
+    }
+    //si todo es correcto mando mensaje afirmativo
+    res.json({message:"Usuario actualizado correctamente"})
 };
 
-export const deleteUserById = async (req, res) => {};
+export const deleteUserById = async (req, res) => {
+   //Extraigo el id de la url
+   const { userId } = req.params;
+   //Envio la peticion de eliminar datos
+   await User.findByIdAndDelete(userId);
+ 
+   res.status(204).json();
+};

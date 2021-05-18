@@ -3,8 +3,8 @@ import User from "../models/userModel";
 
 //Verifico si el usuario que se usa para crear existe
 export const userRepeat = async (req, res, next) => {
-    //Obtengo la cc del usuario a crear y lo busco en la BD
-  const user = User.findOne({ cc: req.body.cc });
+  //Obtengo la cc del usuario a crear y lo busco en la BD
+  const user = await User.findOne({ cc: req.body.cc });
   //Si el usuario existe envio mensaje
   if (user) return res.status(400).json({ message: "The user already exists" });
   //Si no existe le permito procedeer
