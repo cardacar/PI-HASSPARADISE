@@ -1,21 +1,10 @@
-import { Router } from 'express';
+import {Router} from 'express'
+import * as inventoryCtrl from '../controllers/inventoryController'
 
 const router = Router();
 
-router.get('/', (req, res)=>{
-    res.send('Get Inventory')
-});
-
-router.post('/', (req, res)=>{
-    res.send('post Inventor')
-});
-
-router.delete('/:id', (req, res)=>{
-    res.send('delete Inventory')
-});
-
-router.put('/:id', (req, res)=>{
-    res.send('put Inventory')
-});
+router.get('/',(req,res)=>{
+    res.json({success:'inventory'})
+})
 
 export default router;

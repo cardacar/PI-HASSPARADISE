@@ -1,2 +1,0 @@
-DELETE  http://localhost:3001/hsp/adminUsers/10284552
-

@@ -1,22 +1,16 @@
-import mysql from 'mysql'
+import mongoose from 'mongoose';
 
-const conexion = mysql.createConnection({
-    
-    host: process.env.HOST_DB,
-    database: process.env.DATABASE,
-    user: 'root',
-    password: 'root'
-});
 
-conexion.connect(function(error){
-    if(error){
-        throw error;
-    }else{
-        console.log('Conexion a base de datos Exitosa')
+(async ()=>{
+    try{
+        const db = await mongoose.connect('mongodb://localhost/hasspd', {
+            useNewUrlParser:true,
+            useUnifiedTopology:true,
+            useFindAndModify:false,
+            useCreateIndex:true
+        })
+        console.log(`Database is connected: `,db.connection.name)
+    }catch(e){
+        console.log(e)
     }
-});
-
-
-
-export default conexion;
-
+})();

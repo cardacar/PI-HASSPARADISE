@@ -1,21 +1,19 @@
-import { Router } from 'express';
-import * as fertilizationCtrl from '../controllers/fertilizationControllers.js'
-import {userExtractor} from '../middleware/userExtractor.js';
+import {Router} from 'express'
+import * as fertilizationCtrl from '../controllers/fertilizationController'
+import {authJwt} from '../middleware'
 
 const router = Router();
 
-router.get('/', userExtractor ,fertilizationCtrl.getDataUserFertilization);
+router.post('/', authJwt.verifyToken, fertilizationCtrl.createFertilization);
 
-router.get('/admin', userExtractor ,fertilizationCtrl.getAllDataFertilization);
+router.get('/', [authJwt.verifyToken, authJwt.isAdmin], fertilizationCtrl.getFertilizationAll);
+router.get('/:fertilizationId',  authJwt.verifyToken, fertilizationCtrl.getFertilizationById);
 
-router.post('/', userExtractor, fertilizationCtrl.postFertilization);
+router.put('/:fertilizationId', authJwt.verifyToken, fertilizationCtrl.updateFertilizationById);
 
-router.delete('/:id', (req, res)=>{
-    res.send('delete fertilizatio')
-});
+router.delete('/:fertilizationId',  authJwt.verifyToken, fertilizationCtrl.deleteFertilizationById);
 
-router.put('/:id', (req, res)=>{
-    res.send('put fertilization')
-});
+
+
 
 export default router;

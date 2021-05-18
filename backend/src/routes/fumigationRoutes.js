@@ -1,21 +1,17 @@
-import { Router } from 'express';
+import {Router} from 'express'
+import * as fumigationCtrl from '../controllers/fumigationController'
+import { authJwt } from '../middleware';
 
-const router =  Router();
+const router = Router();
 
-router.get('/', (req, res)=>{
-    res.send('get Fumigation')
-});
+router.post('/', authJwt.verifyToken, fumigationCtrl.createFumigation);
 
-router.post('/', (req, res)=>{
-    res.send('post Fumigation')
-});
+router.get('/', [authJwt.verifyToken, authJwt.isAdmin] , fumigationCtrl.getAllFumigation);
 
-router.delete('/:id', (req, res)=>{
-    res.send('delete Fumigation')
-});
+router.get('/:fumigationId',authJwt.verifyToken ,fumigationCtrl.deleteFumigationById);
 
-router.put('/:id', (req, res)=>{
-    res.send('put Fumigati')
-});
+router.put('/:fumigationId', authJwt.verifyToken, fumigationCtrl.updateFumigationById);
+
+router.delete('/:fumigationId', authJwt.verifyToken, fumigationCtrl.deleteFumigationById);
 
 export default router;
