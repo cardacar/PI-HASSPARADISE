@@ -35,6 +35,7 @@ export const verifyToken = async (req, res, next) => {
     next();
   } catch (error) {
     //Si hay algun error mando un mensaje
+    console.log(error)
     return res.status(401).json({ message: "No tienes autorizacion" });
   }
 };

@@ -19,11 +19,13 @@ import Inventario from "../../pages/Inventario";
 import LaboresCultivo from "../../pages/LaboresCultivo";
 import Precipitacion from "../../pages/Precipitacion";
 
-const NavBar = () => {
-  //const [sidebar, setSidebar] = useState(false);
-  //const showSidebar = () => setSidebar(!sidebar);
+const NavBar = ({ authorization }) => {
+  
   const styles = useStyle();
   const theme = palette;
+  /* if(!authorization){
+    return <Redirect to="/"/>
+  } */
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
@@ -56,22 +58,22 @@ const NavBar = () => {
           </Drawer>
           <Switch>
             <Route exact path="/admin">
-              <Admin />
+              <Admin authorization={authorization}/>
             </Route>
             <Route exact path="/admin/Fertilizacion">
-              <Fertilizacion />
+              <Fertilizacion authorization={authorization}/>
             </Route>
             <Route exact path="/admin/LaboresCultivo">
-              <LaboresCultivo />
+              <LaboresCultivo authorization={authorization}/>
             </Route>
             <Route exact path="/admin/Fumigacion">
-              <Fumigacion />
+              <Fumigacion authorization={authorization}/>
             </Route>
             <Route exact path="/admin/Inventario">
-              <Inventario />
+              <Inventario authorization={authorization}/>
             </Route>
             <Route exact path="/admin/Precipitacion">
-              <Precipitacion />
+              <Precipitacion authorization={authorization}/>
             </Route>
           </Switch>
         </div>

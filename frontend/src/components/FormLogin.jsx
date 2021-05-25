@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, /* useEffect */ } from "react";
 import useStyles from "../styles/FormLoginStyle.js";
 import {
   Avatar,
@@ -15,28 +15,37 @@ import Typography from "@material-ui/core/Typography";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import palette from "../styles/PaletteColors.js";
 import { useForm } from "react-hook-form";
-import {getUserFetch} from '../services/LogIn.js'
+import { loginAxios } from "../services/LogIn.js";
+//import { useHistory } from "react-router-dom";
+//import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
-const FormLogin = () => {
-
-  const baseUrl = 'http://localhost:3001/hsp/'
-  const [loginStatus, setloginStatus] = useState("")
+const FormLogin = ({authorization}) => {
+  console.log(authorization)
+  const [loginStatus, setloginStatus] = useState("");
+  //const [logged,setLogged] = useState(false);
 
   const { register, handleSubmit } = useForm();
 
-   const onSubmit = (data) => {
-    const id = data.id
-    const password = data.password
-    getUserFetch(`${baseUrl}users/logIn`,{id,password})
-    .then((response)=>{
-      if(response.data.message){
-        setloginStatus(response.data.message)
-      }else{
-        setloginStatus(response.data.nombre)
+  const onSubmit = async (data) => {
+    try {
+      const cedula = data.cedula;
+      const password = data.password;
+      const {message, token} = await loginAxios(cedula, password);
+      if(!message){
+        setloginStatus("Inicio de sesion correcto");
+        window.localStorage.setItem(
+          'logInUser', token
+        );
+        //setLogged(true);
+        
       }
-    })
+      setloginStatus(message);
+      console.log(loginStatus)
+    } catch (error) {
+      console.log(error);
+      setloginStatus("Error al iniciar sesion");
+    }
   };
-
 
   const styles = useStyles();
   const theme = palette;
@@ -64,15 +73,14 @@ const FormLogin = () => {
                 margin="normal"
                 required
                 fullWidth
-                id="id"
+                id="cedula"
                 label="Ingrese por favor su cedula"
-                name="id"
+                name="cedula"
                 autoComplete="Cedula"
                 autoFocus
                 color="secondary"
-                inputRef ={register}
+                inputRef={register}
               />
-              
 
               <TextField
                 variant="outlined"
@@ -96,16 +104,16 @@ const FormLogin = () => {
               >
                 Iniciar sesion
               </Button>
-              
+
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2" className={styles.link}>
                     ¿Olvidaste tu contraseña?
                   </Link>
                 </Grid>
-                
               </Grid>
               <h3>{loginStatus}</h3>
+              
               <Box mt={5}></Box>
             </form>
           </div>
