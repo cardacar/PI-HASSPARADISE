@@ -12,9 +12,9 @@ export const getUsersAxios = async(token) =>{
     response.data.forEach((datetime, index) => {
         response.data[index].birthDate = datetime.birthDate.split('T')[0];
         if(response.data[index].role[0]==='60a18e786596d12420b8f546'){
-            response.data[index].role = 'Administrador'
+            response.data[index].role = 'admin'
         }else{
-            response.data[index].role = 'Usuario'
+            response.data[index].role = 'user'
         }
     })
     return response.data;

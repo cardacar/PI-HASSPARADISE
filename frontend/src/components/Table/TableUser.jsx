@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from "react";
 import MaterialTable from "material-table";
 import { columnsUsers } from "./TableData";
 import { TextField, Button, Modal } from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
@@ -54,19 +53,19 @@ const TableUser = () => {
     password: "",
     birthDate: "",
     cellphone: "",
-    role: [""],
+    role: "",
   });
 
-  const [currency, setCurrency] = useState();
+  //const [currency, setCurrency] = useState("user");
 
   const Rol = [
+      {
+        value: "user",
+        label: "Usuario",
+      },
     {
       value: "admin",
       label: "Administrador",
-    },
-    {
-      value: "user",
-      label: "Usuario",
     },
   ];
 
@@ -79,7 +78,7 @@ const TableUser = () => {
   const openCloseModalInsertUser = () => {
     setModalInserttUser(!modalInserttUser);
   };
-  const openCloseModalDelete = () => {
+  const openCloseModalDeleteUser = () => {
     setModalDeleteUser(!modalDeleteUser);
   };
   const openCloseModalEditUser = () => {
@@ -92,13 +91,13 @@ const TableUser = () => {
       ...prevState,
       [name]: value,
     }));
-    console.log(user);
+    
   };
 
-  const handleChangeSelect = (event) => {
+  /* const handleChangeSelect = (event) => {
     setCurrency(event.target.value);
     console.log(user)
-  };
+  }; */
 
   useEffect(() => {
     setTimeout(() => {
@@ -108,10 +107,64 @@ const TableUser = () => {
     }, 1000);
   }, [logInToken]);
 
+  const selectionUser = (data, action)=>{
+    setUser(data);
+    (action==="Editar") ? openCloseModalEditUser():openCloseModalDeleteUser();
+  }
+
   const postPetition = async () => {
+      const Roles = [user.role]
+      user.role = Roles
+      console.log(user)
     await axios.post(`${baseUrl}userAdmin`, user, config)
+    .then((response)=>{
+        response.data.birthDate = response.data.birthDate.split('T')[0];
+        if(response.data.role[0]==='60a18e786596d12420b8f546'){
+            response.data.role = 'admin'
+        }else{
+            response.data.role = 'user'
+        }
+        setData(data.concat(response.data))
+        console.log(response)
+        openCloseModalInsertUser();
+    })
+    .catch(error=>console.log(error))
     
   };
+
+  const putPetition = async () =>{
+      const Role = user.role
+      if(Role === "admin"){
+          user.role = ["60a18e786596d12420b8f546"]
+      }else if(Role==="user"){
+          user.role = ["60a18e786596d12420b8f545"]
+      }
+      await axios.put(`${baseUrl}userAdmin/${user._id}`, user,config)
+      .then(response=>{
+          const newData = data;
+          //console.log(newData)
+          newData.forEach(User =>{
+              if(User._id === user._id){
+                  User.fullName = user.fullName;
+                  User.cc = user.cc;
+                  User.birthDate= user.birthDate;
+                  User.role = (user.role[0]==='60a18e786596d12420b8f546')? 'admin':'user';
+              }
+          })
+          setData(newData);
+          openCloseModalEditUser();
+      })
+      .catch(error=>console.log(error))
+  }
+
+  const deletePetition = async ()=>{
+      await axios.delete(`${baseUrl}userAdmin/${user._id}`, config)
+      .then(response=>{
+          setData(data.filter(User=> User._id!==user._id));
+          openCloseModalDeleteUser();
+      })
+      .catch(error=>console.log(error))
+  }
 
   const bodyInsertar = (
     <div className={styles.modal}>
@@ -174,7 +227,7 @@ const TableUser = () => {
             select
             label="Rol"
             name="role"
-            value={currency}
+            
             onChange={handleChange}
             SelectProps={{
               native: true,
@@ -193,7 +246,7 @@ const TableUser = () => {
         <Grid item xs={12}>
           <div align="right">
             <br />
-            <Button className={styles.btn} onClick={() => alert("hola")}>
+            <Button className={styles.btn} onClick={() => postPetition()}>
               Insertar
             </Button>
             <Button onClick={() => openCloseModalInsertUser()}>Cancelar</Button>
@@ -202,6 +255,116 @@ const TableUser = () => {
       </Grid>
     </div>
   );
+
+
+  const bodyEdit = (
+    <div className={styles.modal}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <h3>Agregar un usuario nuevo</h3>
+        </Grid>
+        <br />
+        <Grid item xs={12}>
+          <TextField
+            className={styles.inputMaterial}
+            label="Nombre Completo"
+            name="fullName"
+            onChange={handleChange}
+            value={user&&user.fullName}
+          />
+        </Grid>
+        <br />
+        <Grid item xs={6}>
+          <TextField
+            className={styles.inputMaterial}
+            label="Cedula"
+            name="cc"
+            onChange={handleChange}
+            value={user&&user.cc}
+          />
+        </Grid>
+
+        <br />
+        <Grid item xs={6}>
+          <TextField
+            className={styles.inputMaterial}
+            label="Nueva Contraseña"
+            name="password"
+            type="password"
+            onChange={handleChange}
+          />
+        </Grid>
+        <br />
+
+        <Grid item xs={6}>
+          <TextField
+            className={styles.inputMaterial}
+            name="birthDate"
+            type="date"
+            onChange={handleChange}
+            value={user&&user.date}
+          />
+        </Grid>
+        <br />
+        <Grid item xs={6}>
+          <TextField
+            className={styles.inputMaterial}
+            label="Telefono"
+            name="cellphone"
+            onChange={handleChange}
+            value={user&&user.cellphone}
+
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <br />
+          <TextField
+            className={styles.inputMaterial}
+            select
+            label="Rol"
+            name="role"
+            
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            {Rol.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+        </Grid>
+        <br />
+        <br />
+
+        <Grid item xs={12}>
+          <div align="right">
+            <br />
+            <Button className={styles.btn} onClick={() => putPetition()}>
+              Insertar
+            </Button>
+            <Button onClick={() => openCloseModalEditUser()}>Cancelar</Button>
+          </div>
+        </Grid>
+      </Grid>
+    </div>
+  );
+
+  const bodyDelete=(
+    <div className={styles.modal}>
+      <p>Estás seguro que deseas eliminar el dato <b>{user && user.fullName}</b>? </p>
+      <div align="right">
+        <Button color="secondary" onClick={()=>deletePetition()}>Sí</Button>
+        <Button onClick={()=>openCloseModalDeleteUser()}>No</Button>
+
+      </div>
+
+    </div>
+  )
+
+
 
   return (
     <Fragment>
@@ -213,12 +376,12 @@ const TableUser = () => {
           {
             icon: "edit",
             tooltip: "Editar",
-            onClick: (e, rowData) => console.log(rowData.fullName),
+            onClick: (e, rowData) => selectionUser(rowData, 'Editar'),
           },
           {
             icon: "delete",
             tooltip: "Eliminar",
-            onClick: (e, rowData) => console.log(rowData.fullName),
+            onClick: (e, rowData) => selectionUser(rowData, 'Eliminar'),
           },
         ]}
         options={{
@@ -235,6 +398,12 @@ const TableUser = () => {
       </Button>
       <Modal open={modalInserttUser} onClose={openCloseModalInsertUser}>
         {bodyInsertar}
+      </Modal>
+      <Modal open={modalEditUser} onClose={openCloseModalEditUser}>
+        {bodyEdit}
+      </Modal>
+      <Modal open={modalDeleteUser} onClose={openCloseModalDeleteUser}>
+        {bodyDelete}
       </Modal>
     </Fragment>
   );

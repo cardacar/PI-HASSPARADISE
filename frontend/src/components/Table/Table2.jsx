@@ -305,7 +305,7 @@ const handleChangeAmount= e=>{
     <div className={styles.modal}>
       <Grid container spacing={3}>
         <Grid item xs={12} >
-          <h3>Agregar un dato a la tabla fertilizacion</h3>
+          <h3>Editar</h3>
         </Grid>
         <br />
         <Grid item xs={4}>

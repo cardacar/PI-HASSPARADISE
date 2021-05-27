@@ -36,9 +36,9 @@ export const createUser = async (req, res) => {
     newUser.role = [role._id];
   }
   //obtengo el usuario que se guardo en la bd
-  await newUser.save();
+  const userSave = await newUser.save();
   //Devuelvo el token con los datos del usuario
-  res.json({ message: "Usuario creado satisfactoriamente" });
+  res.json(userSave);
 };
 
 export const getAllUser = async (req, res) => {
@@ -64,6 +64,9 @@ export const getUserById = async (req, res) => {
 export const updateUserById = async (req, res) => {
     //Obtengo el id del params
     const {userId} = req.params;
+    const pass = req.body.password;
+    req.body.password = await User.encryptPassword(pass)
+    let userUpdate = {}
     //Busco y actualizo los datos del usuario
     try {
       userUpdate = await User.findByIdAndUpdate(userId, req.body,{new:true});
@@ -72,7 +75,7 @@ export const updateUserById = async (req, res) => {
       res.json({message:"Usuario no actualizado"})
     }
     //si todo es correcto mando mensaje afirmativo
-    res.json({message:"Usuario actualizado correctamente"})
+    res.json(userUpdate)
 };
 
 export const deleteUserById = async (req, res) => {
