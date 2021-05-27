@@ -1,31 +1,48 @@
-import React, { Fragment,/*  useState, useEffect */ } from "react";
+import React, { Fragment,/* useState, useEffect */} from "react";
 import "./App.css";
 import Navbar from "./components/SideBar/NavBar";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route  } from "react-router-dom";
 import Login from "./components/FormLogin";
 
-const App = () => {
-  /* const [status, setStatus] = useState(false);
-  const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const logInToken = window.localStorage.getItem("logInUser");
-    if (logInToken != "") {
-      setStatus(true);
-      console.log(status);
-    }
-  }, []); */
+const App = () => {
+  
+
 
   return (
     <Fragment>
       <Router>
         <Switch>
-          
-          <Route exact path="/" component={()=><Login authorization={true} />} />
+          <Route exact path="/" component={()=><Login />} />
           <Route
             exact
             path="/admin"
-            component={() => <Navbar authorization={true} />}
+            component={() => <Navbar />}
+          />
+          <Route
+            exact
+            path="/admin/Fertilizacion"
+            component={() => <Navbar />}
+          />
+          <Route
+            exact
+            path="/admin/LaboresCultivo"
+            component={() => <Navbar />}
+          />
+          <Route
+            exact
+            path="/admin/Fumigacion"
+            component={() => <Navbar />}
+          />
+          <Route
+            exact
+            path="/admin/Inventario"
+            component={() => <Navbar />}
+          />
+          <Route
+            exact
+            path="/admin/Precipitacion"
+            component={() => <Navbar />}
           />
         </Switch>
       </Router>

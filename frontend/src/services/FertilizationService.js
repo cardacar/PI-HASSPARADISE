@@ -13,6 +13,17 @@ export const getFertilizationAllAxios = async (token)=>{
         }
     }
     const response = await axios.get(`${baseUrl}fertilization`, config);
-    //console.log(response.data)
+    return response.data;
+}
+
+export const postFertilizationAxios = async (token, data)=>{
+    const config={
+        headers:{
+            Authorization: `Bearer ${token}`
+            
+        }
+    }
+    const response = await axios.post(`${baseUrl}fertilization`,data, config).then;
+
     return response.data;
 }

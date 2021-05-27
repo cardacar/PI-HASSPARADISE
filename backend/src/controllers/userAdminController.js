@@ -13,6 +13,7 @@ export const createUser = async (req, res) => {
     numberTelephony,
     roles,
   } = req.body;
+  
   //creo el objeto usuario
   const newUser = new User({
     fullName,

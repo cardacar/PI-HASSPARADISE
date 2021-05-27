@@ -19,9 +19,9 @@ import { loginAxios } from "../services/LogIn.js";
 //import { useHistory } from "react-router-dom";
 //import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
-const FormLogin = ({authorization}) => {
-  console.log(authorization)
+const FormLogin = () => {
   const [loginStatus, setloginStatus] = useState("");
+  //let history = useHistory();
   //const [logged,setLogged] = useState(false);
 
   const { register, handleSubmit } = useForm();
@@ -31,16 +31,15 @@ const FormLogin = ({authorization}) => {
       const cedula = data.cedula;
       const password = data.password;
       const {message, token} = await loginAxios(cedula, password);
-      if(!message){
+      if(token){
         setloginStatus("Inicio de sesion correcto");
         window.localStorage.setItem(
           'logInUser', token
         );
-        //setLogged(true);
         
       }
+      
       setloginStatus(message);
-      console.log(loginStatus)
     } catch (error) {
       console.log(error);
       setloginStatus("Error al iniciar sesion");
@@ -101,6 +100,9 @@ const FormLogin = ({authorization}) => {
                 fullWidth
                 variant="contained"
                 className={styles.submit}
+                onClick={()=>{
+                  console.log(loginStatus)}
+                }
               >
                 Iniciar sesion
               </Button>

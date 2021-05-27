@@ -26,13 +26,15 @@ const NavBar = ({ authorization }) => {
   /* if(!authorization){
     return <Redirect to="/"/>
   } */
+
+
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <div style={{ display: "flex" }}>
           <Drawer
-            style={{ width: "250px" }}
+            style={{ width: "210px" }}
             variant="persistent"
             anchor="left"
             open={true}
@@ -41,7 +43,7 @@ const NavBar = ({ authorization }) => {
             <List>
               {SidebarData.map((val, key) => {
                 return (
-                  <Link to={val.link} key={key} className={styles.link}>
+                  <Link to={val.link} key={key} className={styles.link} >
                     <ListItem button className={styles.row}>
                       <ListItemIcon className={styles.icons}>
                         {val.icon}
@@ -49,6 +51,7 @@ const NavBar = ({ authorization }) => {
                       <ListItemText
                         className={styles.title}
                         primary={val.title}
+                        
                       />
                     </ListItem>
                   </Link>
