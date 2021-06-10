@@ -1,8 +1,8 @@
-import React from "react";
+import React, {Fragment} from "react";
 import { SidebarData } from "./SidebarData";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+//import { MuiThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
-import palette from "../../styles/PaletteColors";
+//import palette from "../../styles/PaletteColors";
 import useStyle from "../../styles/NavbarStyle";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
@@ -19,22 +19,19 @@ import Inventario from "../../pages/Inventario";
 import LaboresCultivo from "../../pages/LaboresCultivo";
 import Precipitacion from "../../pages/Precipitacion";
 
-const NavBar = ({ authorization }) => {
+const NavBar = () => {
   
   const styles = useStyle();
-  const theme = palette;
-  /* if(!authorization){
-    return <Redirect to="/"/>
-  } */
-
+  
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <Fragment>
+
       <CssBaseline />
       <Router>
         <div style={{ display: "flex" }}>
           <Drawer
-            style={{ width: "210px" }}
+            style={{ width: "13.125rem" }}
             variant="persistent"
             anchor="left"
             open={true}
@@ -43,7 +40,7 @@ const NavBar = ({ authorization }) => {
             <List>
               {SidebarData.map((val, key) => {
                 return (
-                  <Link to={val.link} key={key} className={styles.link} >
+                  <Link to={val.link} key={key} className={styles.link}>
                     <ListItem button className={styles.row}>
                       <ListItemIcon className={styles.icons}>
                         {val.icon}
@@ -52,7 +49,7 @@ const NavBar = ({ authorization }) => {
                         className={styles.title}
                         primary={val.title}
                         
-                      />
+                        />
                     </ListItem>
                   </Link>
                 );
@@ -61,27 +58,27 @@ const NavBar = ({ authorization }) => {
           </Drawer>
           <Switch>
             <Route exact path="/admin">
-              <Admin authorization={authorization}/>
+              <Admin/>
             </Route>
             <Route exact path="/admin/Fertilizacion">
-              <Fertilizacion authorization={authorization}/>
+              <Fertilizacion/>
             </Route>
             <Route exact path="/admin/LaboresCultivo">
-              <LaboresCultivo authorization={authorization}/>
+              <LaboresCultivo/>
             </Route>
             <Route exact path="/admin/Fumigacion">
-              <Fumigacion authorization={authorization}/>
+              <Fumigacion/>
             </Route>
             <Route exact path="/admin/Inventario">
-              <Inventario authorization={authorization}/>
+              <Inventario/>
             </Route>
             <Route exact path="/admin/Precipitacion">
-              <Precipitacion authorization={authorization}/>
+              <Precipitacion/>
             </Route>
           </Switch>
         </div>
       </Router>
-    </MuiThemeProvider>
+              </Fragment>
   );
 };
 

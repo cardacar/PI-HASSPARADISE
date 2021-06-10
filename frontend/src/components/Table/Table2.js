@@ -3,9 +3,13 @@ import MaterialTable from "material-table";
 import { columns } from "./TableData";
 import { Modal, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { getFertilizationAllAxios } from "../../services/FertilizationService";
+import { getFertilizationAllAxios, 
+  /* postFertilizationAxios,  */
+  putFertilizationAxios, 
+  deleteFertilizationAxios } from "../../services/FertilizationService";
 import Grid from "@material-ui/core/Grid";
-import axios from 'axios';
+//import ModalInsertFertilization from '../Modals/ModalInsertFertilization'
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -44,15 +48,9 @@ const Table2 = () => {
   const [modalDelete, setModalDelete] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const styles = useStyles();
-  const logInToken = window.localStorage.getItem("logInUser");
-  const baseUrl = 'http://localhost:3001/api/hpd/';
 
-  const config={
-    headers:{
-        Authorization: `Bearer ${logInToken}`
-        
-    }
-}
+  
+
   const [fertilization, setFertilization] = useState({
     
     equipment: "",
@@ -72,7 +70,10 @@ const Table2 = () => {
     },
   });
 
-  const openCloseModalInsert = () => {
+
+
+
+ const openCloseModalInsert = () => {
     setModalInsert(!modalInsert);
   };
   const openCloseModalDelete = () => {
@@ -111,30 +112,34 @@ const handleChangeAmount= e=>{
     
 }
   
-
+/* const prueba = e=>{
+  const {name, value} = e.target;
+  console.log(`name: ${name}, value: ${value}`)
+} */
 
   useEffect(() => {
     setTimeout(() => {
-      getFertilizationAllAxios(logInToken).then((fertilization) => {
+      getFertilizationAllAxios().then((fertilization) => {
         setData(fertilization);
       });
     }, 1000);
-  }, [logInToken]);
+  }, []);
 
-  const postPetition = async ()=>{
-    await axios.post(`${baseUrl}fertilization`, fertilization, config)
-    .then((response)=>{
-        setData(data.concat(response.data))
+
+ /*  const postPetition = async ()=>{
+
+    await postFertilizationAxios(fertilization).then((response)=>{
+      setData(data.concat(response.data))
         console.log(response)
         openCloseModalInsert();
     })
-    .catch(error=>console.log(error))
+    .catch(error=>console.log(error));
     
-  }
+  } */
 
   const putPetition = async ()=>{
-      await axios.put(`${baseUrl}fertilization/${fertilization._id}`, fertilization, config)
-      .then(response => {
+    await putFertilizationAxios(fertilization,fertilization._id)
+    .then(response => {
         const newData = data;
         newData.forEach(fert =>{
             if(fert._id===fertilization._id){
@@ -158,7 +163,7 @@ const handleChangeAmount= e=>{
   }
 
   const deletePetition = async ()=>{
-    await axios.delete(`${baseUrl}fertilization/${fertilization._id}`, config)
+    await deleteFertilizationAxios(fertilization._id)
     .then(response=>{
         setData(data.filter(fert=>fert._id!==fertilization._id));
         console.log(response)
@@ -172,7 +177,7 @@ const handleChangeAmount= e=>{
     (action==="Editar" )?openCloseModalEdit():openCloseModalDelete()
   }
 
-  const bodyInsertar = (
+ /*  const bodyInsertar = (
     <div className={styles.modal}>
       <Grid container spacing={3}>
         <Grid item xs={12} >
@@ -299,7 +304,7 @@ const handleChangeAmount= e=>{
         </div>
       </Grid>
     </div>
-  );
+  ); */
 
   const bodyEdit = (
     <div className={styles.modal}>
@@ -449,6 +454,8 @@ const handleChangeAmount= e=>{
 
     </div>
   )
+//const modalEditFertilization = ()=>(<ModalInsertFertilization Change={prueba}/>)
+
 
   return (
     <div>
@@ -478,9 +485,6 @@ const handleChangeAmount= e=>{
         }}
       />
       <Button onClick={() => openCloseModalInsert()} className={styles.btn}>Insertar</Button>
-      <Modal open={modalInsert} onClose={openCloseModalInsert}>
-        {bodyInsertar}
-      </Modal>
       <Modal open={modalEdit} onClose={openCloseModalEdit}>
         {bodyEdit}
       </Modal>

@@ -37,6 +37,6 @@ export const SidebarData = [
     {
         title:"Cerrar sesion",
         icon: <FaSignOutAlt/>,
-        link:"/logout"
+        link:"/hola"
     }
 ]

@@ -11,7 +11,7 @@ const useStyle = makeStyles((theme) => ({
   },
   row: {
     width: "100%",
-    height: "50px",
+    height: "3.125rem",
     listStyleType: "none",
     margin: "0",
     display: "flex",

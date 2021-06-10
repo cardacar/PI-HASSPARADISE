@@ -101,11 +101,11 @@ const TableUser = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      getUsersAxios(logInToken).then((user) => {
+      getUsersAxios().then((user) => {
         setData(user);
       });
     }, 1000);
-  }, [logInToken]);
+  }, []);
 
   const selectionUser = (data, action)=>{
     setUser(data);
