@@ -3,6 +3,7 @@ import { Dialog, DialogTitle, DialogContent, makeStyles, Typography} from '@mate
 import Controls from '../Controls/Control'
 import CloseIcon from '@material-ui/icons/Close'
 
+//Estilo individual de la pagina de dialogo
 const useStyles = makeStyles((theme) => ({
     dialogWraper:{
         padding: theme.spacing(2),

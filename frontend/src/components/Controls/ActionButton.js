@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, makeStyles} from '@material-ui/core'
-
+//Estilo individual para el action button
 const useStyle = makeStyles(theme=>({
     root:{
         minWidth:0,
@@ -19,12 +19,14 @@ const useStyle = makeStyles(theme=>({
         }
     },
 }))
-
+//Action button
 const ActionButton = (props) => {
+    //Extraigo las props pasadas
     const {color, children, onClick} = props
+    //asigno los estilos a una variable styles
     const style = useStyle();
 
-
+    //Boton a renderizar con su props customizadas
     return (
         <Button
             className={`${style.root} ${style[color]}`}

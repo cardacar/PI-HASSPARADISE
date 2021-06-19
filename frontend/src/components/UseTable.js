@@ -1,3 +1,4 @@
+//Imports necesarios
 import React, { useState } from "react";
 import {
   Table,
@@ -9,6 +10,7 @@ import {
   TableSortLabel,
 } from "@material-ui/core";
 
+//Estilo individual de la tabla
 const useStyles = makeStyles((theme) => ({
   table: {
     marginTop: theme.spacing(3),
@@ -27,26 +29,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+//Funcion que me controla toda la tabla
 export default function useTable (data, headCells, filterFn) {
   const styles = useStyles();
-
+  //Paginas que contendra la tabla
   const pages = [5, 10, 25];
+  //Paginas
   const [page, setPage] = useState(0);
+  //Pagina actual
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
+  //Ordenamiento de los datos
   const [order, setOrder] = useState();
+  //Ordenar por algo en especifico
   const [orderBy, setOrderBy] = useState();
 
+  //Contenedor de la tabla
   const TblContainer = (props) => (
     <Table className={styles.table}>{props.children}</Table>
   );
 
+  //header de la tabla, la cual controla el ordenamiento de los datos
   const TblHead = (props) => {
     const handleSort = (cellId) => {
       const isAscending = orderBy === cellId && order === "asc";
       setOrder(isAscending ? "desc" : "asc");
       setOrderBy(cellId);
     };
-
+    //Renderizo el tableHead
     return (
       <TableHead>
         <TableRow>
@@ -73,15 +83,17 @@ export default function useTable (data, headCells, filterFn) {
     );
   };
 
+  //Funcion que permite cambiar la pagina de la tabla
   const changePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  //Funcion que detecta el cambio de pagina
   const changeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+  //Paginacion de la pagina, se renderiza ya que es una vista
   const TablePaginationCustom = () => 
     (<TablePagination
       component="div"
@@ -93,7 +105,8 @@ export default function useTable (data, headCells, filterFn) {
       onChangeRowsPerPage={changeRowsPerPage}
     />)
   ;
-
+  
+  //Funcion que ordena los datos dependiendo de lo que se pase en el order
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -103,13 +116,14 @@ export default function useTable (data, headCells, filterFn) {
     });
     return stabilizedThis.map((el) => el[0]);
   }
-
+  //comparo para saber si se ordena de forma ascendente o descendente
   function getComparator(order, orderBy) {
     return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
+  //comparador para ordenarlo de forma descendente
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -120,6 +134,7 @@ export default function useTable (data, headCells, filterFn) {
     return 0;
   }
   //data.map(item=>console.log(item))
+  //contador de datos para obtener el numero de paginas totales
   const dataAfterPagingAndSorting = () => {
     return stableSort(filterFn.fn(data), getComparator(order, orderBy)).slice(
       page * rowsPerPage,
@@ -127,6 +142,7 @@ export default function useTable (data, headCells, filterFn) {
     );
   };
 
+  //retorno todos los elementos de la tabla
   return {
     TblContainer,
     TblHead,

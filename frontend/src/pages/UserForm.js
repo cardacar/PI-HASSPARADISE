@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import Control from "../components/Controls/Control";
 import { useForm, Form } from "../components/Form";
-import * as userService from "../services/UsersService";
+/* import * as userService from "../services/UsersService"; */
 
 const initialFValues = {
   _id: 0,
@@ -90,6 +90,7 @@ export default function UserForm (props) {
               label="Contraseña"
               onChange={handleInputChange}
               errors={errors.password}
+              type="password"
             />
             <Control.DataCalendar
               name="birthDate"
@@ -97,14 +98,14 @@ export default function UserForm (props) {
               value={values.birthDate}
               onChange={handleInputChange}
             />
-            <Control.Select
+            {/* <Control.Select
               name="role"
               label="Rol"
               value={values.role}
               onChange={handleInputChange}
               options={userService.getRoles()}
               errors={errors.role}
-            />
+            /> */}
 
             <div>
               <Control.Button type="submit" text="Agregar" />
