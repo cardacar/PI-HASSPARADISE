@@ -10,4 +10,6 @@ const inventorySchema = new Schema({
     totalPlantingDistance: String,
     hectaresSown: Number
 
-})
+});
+
+export default model('inventory', inventorySchema);

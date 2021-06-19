@@ -13,6 +13,7 @@ export const createUser = async (req, res) => {
     numberTelephony,
     roles,
   } = req.body;
+  console.log(req.body)
   //creo el objeto usuario
   const newUser = new User({
     fullName,
@@ -22,7 +23,7 @@ export const createUser = async (req, res) => {
     cellphone,
     numberTelephony,
   });
-
+  console.log(newUser)
   //Verifico si pasaron el rol
   if (roles) {
     //si existe un rol proporcionado, busco el id en la bd
@@ -35,9 +36,9 @@ export const createUser = async (req, res) => {
     newUser.role = [role._id];
   }
   //obtengo el usuario que se guardo en la bd
-  await newUser.save();
+  const userSave = await newUser.save();
   //Devuelvo el token con los datos del usuario
-  res.json({ message: "Usuario creado satisfactoriamente" });
+  res.json(userSave);
 };
 
 export const getAllUser = async (req, res) => {
@@ -61,10 +62,30 @@ export const getUserById = async (req, res) => {
 };
 
 export const updateUserById = async (req, res) => {
+  console.log(req.body)
     //Obtengo el id del params
     const {userId} = req.params;
+    if(req.body.password){
+      const pass = req.body.password;
+      req.body.password = await User.encryptPassword(pass)
+    }
+    let userUpdate = {}
     //Busco y actualizo los datos del usuario
-    const userUpdate = await User.findByIdAndUpdate(userId, req.body,{new:true});
+    try {
+      userUpdate = await User.findByIdAndUpdate(userId, req.body,{new:true});
+    } catch (error) {//Si ocurre un error mando un mensaje e imprimo el error
+      console.log(error)
+      res.json({message:"Usuario no actualizado"})
+    }
+    //si todo es correcto mando mensaje afirmativo
+    res.json(userUpdate)
 };
 
-export const deleteUserById = async (req, res) => {};
+export const deleteUserById = async (req, res) => {
+   //Extraigo el id de la url
+   const { userId } = req.params;
+   //Envio la peticion de eliminar datos
+   await User.findByIdAndDelete(userId);
+ 
+   res.status(204).json();
+};

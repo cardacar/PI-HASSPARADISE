@@ -10,6 +10,7 @@ export const createRoles = async () => {
     const values = await Promise.all([
       await new role({ name: "user" }).save(),
       await new role({ name: "admin" }).save(),
+      await new role({ name: "gestorReportes"}).save(),
     ]);
     //Si existe algun error  lo muestro
   } catch (error) {

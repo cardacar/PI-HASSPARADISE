@@ -1,11 +1,14 @@
 import axios from 'axios';
 
-export const baseUrl = 'http://localhost:3001/hsp/'
+export const baseUrl = 'http://localhost:3001/api/hpd/'
 
-export const getUserFetch = (url, data)=>{
-    return axios.post(url,data);
-}
-
-export const prueba = ()=>{
-    console.log('hola')
+export const loginAxios = async (cedula,password)=>{
+    
+    const response = await axios.post(`${baseUrl}auth/signIn`,{cedula,password})
+    if(response.data.message){
+        const message = response.data.message
+        return {message:message}
+    }
+    const token = response.data.token;
+    return {token:token};
 }

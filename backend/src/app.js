@@ -27,7 +27,8 @@ dotenv.config({path:'./.env'})
 app.use(morgan('dev'));//ver las peticiones que llegan al servidor
 app.use(express.json());//saber leer json
 app.use(express.urlencoded({extended:false}));//obtencion de datos de la url
-app.use(cors({origin:"http://localhost:3000", credentials:true}));//aceptacion de datos desde el frontend
+app.use(cors({origin:"http://localhost:3000", credentials:true}));
+//app.use(cors({origin:"http://localhost:5000", credentials:true}));//aceptacion de datos desde el frontend
 
 //Routes
 app.get('/',(req, res)=>{
