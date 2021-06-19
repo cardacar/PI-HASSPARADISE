@@ -15,7 +15,7 @@ export const createFertilization = async (req, res) => {
     technicalVisit,
     observation,
   } = req.body;
-  console.log(req.body.userId);
+  
   //Creo un objeto con los datos a guardar
   const newFertilization = new fertilization({
     fullName:Name,

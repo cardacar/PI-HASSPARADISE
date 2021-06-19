@@ -7,6 +7,7 @@ export const verifyToken = async (req, res, next) => {
   try {
     //Obtengo el token de la cabecera de autorizacion
     const authorization = req.get("authorization");
+    console.log(authorization)
     //Verifico que exista algun token, si no existe envio un mensaje
     if (!authorization)
     return res.status(403).json({ message: "No token provider" });
