@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     dialogWraper:{
         padding: theme.spacing(2),
         position: 'absolute',
-        top: theme.spacing(5)
+        
     },
     dialogTitle:{
         paddingRigth:'0px'

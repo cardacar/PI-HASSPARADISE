@@ -1,7 +1,7 @@
 import fumigation from "../models/fumigationModel";
 
 export const createFumigation = async (req, res) => {
-  console.log(req.body);
+
   //extraigo los datos del body
   const {
     userId,
