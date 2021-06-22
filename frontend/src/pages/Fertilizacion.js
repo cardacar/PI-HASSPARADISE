@@ -11,6 +11,8 @@ import {
   TableCell,
   Toolbar,
   InputAdornment,
+  Typography,
+  Divider,
   /* Link */
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
@@ -25,6 +27,7 @@ import {
 } from "../services/FertilizationService";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EventNoteIcon from '@material-ui/icons/EventNote';
 import ModalDialog from "../components/Modals/ModalDialog";
 import FertilizationForm from "./FertilizationForm";
 import Notification from "../components/Notification";
@@ -50,14 +53,11 @@ const useStyles = makeStyles((theme) => ({
 //Columnas que tendra la tabla
 const fertilizationColumns = [
   { id: "fullName", label: "Nombre empleado" },
-  { id: "equipment", label: "Equipo" },
   { id: "lot", label: "Lote" },
+  { id: "equipment", label: "Equipo" },
   { id: "method", label: "Metodo" },
   { id: "product", label: "Producto" },
   { id: "technicalVisit", label: "Visita" },
-  { id: "composition.B", label: "B" },
-  { id: "composition.K2O", label: "K2O" },
-  { id: "amount.cc", label: "cc" },
   { id: "actions", label: "Acciones" },
 ];
 
@@ -123,26 +123,50 @@ const Fertilizacion = () => {
   //Funcion que sirve para saber si el dato es para editar o guardar uno nuevo
   const addOrEdit = (dataF, resetForm) => {
     //Si el dato no contiene un id significa que lo debo guardar
-    if (dataF._id === 0)
-      postFertilizationAxios(dataF)
+    const newDataF = {
+      _id: dataF._id,
+      fullName: dataF.fullName,
+      equipment: dataF.equipment,
+      lot: dataF.lot,
+      product: dataF.product,
+      technicalVisit: dataF.technicalVisit,
+      method: dataF.method,
+      observation: dataF.observation,
+      composition: {
+        N: dataF.N || "",
+        P2O2: dataF.P2O2 || "",
+        K2O: dataF.K2O || "",
+        CaO: dataF.CaO || "",
+        S: dataF.S || "",
+        Fe: dataF.Fe || "",
+        Mn: dataF.Mn || "",
+        Cu: dataF.Cu || "",
+        Zn: dataF.Zn || "",
+        Mo: dataF.Mo || "",
+        B: dataF.B || "",
+      },
+      amount: {
+        cc: dataF.cc || "",
+        gr: dataF.gr || "",
+        total: dataF.total || "",
+      },
+    };
+    if (newDataF._id === 0)
+      postFertilizationAxios(newDataF)
         .then((response) => {
           setData(data.concat(response));
         })
         .catch((error) => console.log(error));
     //En caso contrario es para editar un dato
     else
-      putFertilizationAxios(dataF, dataF._id).then((response) => {
+      putFertilizationAxios(newDataF, newDataF._id).then((response) => {
         const newData = data;
         newData.forEach((fert) => {
           if (fert._id === response._id) {
             fert.fullName = response.fullName;
             fert.equipment = response.equipment;
-            fert.lot = response.lot;
             fert.product = response.product;
             fert.technicalVisit = response.technicalVisit;
-            fert.composition.B = response.composition.B;
-            fert.composition.K2O2 = response.composition.K2O2;
-            fert.amount.cc = response.amount.cc;
           }
         });
         setData(newData);
@@ -217,6 +241,15 @@ const Fertilizacion = () => {
 
         <Grid item xs={12}>
           <Paper className={styles.pageContent}>
+            <Grid container item xs={11}>
+              <Typography variant="h6" component="h5">
+                {filterLote === 0 || filterLote==20 ||filterLote==21 || filterLote==22 || filterLote==23
+                  ? "Se muestran todos los lotes, por favor seleccione un lote en el mapa"
+                  : `Busqueda por el lote ${filterLote}`}
+              </Typography>
+            </Grid>
+            <Divider variant="middle" />
+            <br />
             <Toolbar>
               <Controls.Input
                 label="Buscar dato"
@@ -248,23 +281,19 @@ const Fertilizacion = () => {
                 {dataAfterPagingAndSorting().map((item) => (
                   <TableRow key={item._id}>
                     <TableCell>{item.fullName}</TableCell>
-                    <TableCell>{item.equipment}</TableCell>
                     <TableCell>{item.lot}</TableCell>
+                    <TableCell>{item.equipment}</TableCell>
                     <TableCell>{item.method}</TableCell>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.technicalVisit}</TableCell>
-                    <TableCell>{item.composition.B}</TableCell>
-                    <TableCell>{item.composition.K2O}</TableCell>
-                    <TableCell>{item.amount.cc}</TableCell>
                     <TableCell>
                       <Controls.ActionButton
                         color="primary"
                         onClick={() => {
                           openModal(item);
-                          console.log(item._id);
                         }}
                       >
-                        <EditOutlined fontSize="inherit" />
+                        <EditOutlined />
                       </Controls.ActionButton>
                       <Controls.ActionButton
                         color="secondary"
@@ -275,12 +304,11 @@ const Fertilizacion = () => {
                             subTitle: "Esta accion es irreversible",
                             onConfirm: () => {
                               onDelete(item._id);
-                              console.log(item._id);
                             },
                           });
                         }}
                       >
-                        <DeleteIcon fontSize="inherit" />
+                        <DeleteIcon />
                       </Controls.ActionButton>
                     </TableCell>
                   </TableRow>

@@ -13,7 +13,7 @@ export const createUser = async (req, res) => {
     numberTelephony,
     roles,
   } = req.body;
-  console.log(req.body)
+  
   //creo el objeto usuario
   const newUser = new User({
     fullName,
@@ -23,7 +23,7 @@ export const createUser = async (req, res) => {
     cellphone,
     numberTelephony,
   });
-  console.log(newUser)
+  
   //Verifico si pasaron el rol
   if (roles) {
     //si existe un rol proporcionado, busco el id en la bd
@@ -62,7 +62,7 @@ export const getUserById = async (req, res) => {
 };
 
 export const updateUserById = async (req, res) => {
-  console.log(req.body)
+  
     //Obtengo el id del params
     const {userId} = req.params;
     if(req.body.password){

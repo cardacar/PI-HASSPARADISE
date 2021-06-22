@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography, Divider } from "@material-ui/core";
 import Control from "../components/Controls/Control";
 import { useForm, Form } from "../components/Form";
 
@@ -10,18 +10,31 @@ const initialFValues = {
   lot: "",
   product: "",
   technicalVisit: "",
-  composition: {
-    B: "",
-    K2O: "",
-  },
-  amount: {
-    cc: "",
-  },
+  method: "",
+  observation: "",
+  N: "",
+  P2O2: "",
+  K2O: "",
+  CaO: "",
+  S: "",
+  Fe: "",
+  Mn: "",
+  Cu: "",
+  Zn: "",
+  Mo: "",
+  B: "",
+  cc: "",
+  gr: "",
+  total: "",
 };
 
 export default function FertilizationForm(props) {
   const { addOrEdit, dataForEdit } = props;
-  const validate = {};
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors };
+
+    return Object.values(temp).every((x) => x === "");
+  };
   const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
     useForm(initialFValues, true, validate);
 
@@ -33,10 +46,36 @@ export default function FertilizationForm(props) {
   };
 
   useEffect(() => {
-    if (dataForEdit != null)
+    if (dataForEdit != null){
+      const newDataForEdit={
+          _id: dataForEdit._id,
+          fullName: dataForEdit.fullName,
+          equipment: dataForEdit.equipment,
+          lot: dataForEdit.lot,
+          product: dataForEdit.product,
+          technicalVisit: dataForEdit.technicalVisit,
+          method: dataForEdit.method,
+          observation: dataForEdit.observation,
+          N: dataForEdit.composition.N,
+          P2O2: dataForEdit.composition.P2O2,
+          K2O: dataForEdit.composition.K2O,
+          CaO: dataForEdit.composition.CaO,
+          S: dataForEdit.composition.S,
+          Fe: dataForEdit.composition.Fe,
+          Mn: dataForEdit.composition.Mn,
+          Cu: dataForEdit.composition.Cu,
+          Zn: dataForEdit.composition.Zn,
+          Mo: dataForEdit.composition.Mo,
+          B: dataForEdit.composition.B,
+          cc: dataForEdit.amount.cc,
+          gr: dataForEdit.amount.gr,
+          total: dataForEdit.amount.total,
+      }
       setValues({
-        ...dataForEdit,
+        ...newDataForEdit,
       });
+
+    }
   }, [setValues, dataForEdit]);
 
   return (
@@ -54,7 +93,7 @@ export default function FertilizationForm(props) {
             <Control.Input
               name="equipment"
               label="Equipo*"
-              value={values.lot}
+              value={values.equipment}
               onChange={handleInputChange}
               errors={errors.equipment}
             />
@@ -64,6 +103,7 @@ export default function FertilizationForm(props) {
               value={values.lot}
               onChange={handleInputChange}
               errors={errors.lot}
+              type='Number'
             />
             <Control.Input
               name="product"
@@ -72,8 +112,13 @@ export default function FertilizationForm(props) {
               onChange={handleInputChange}
               errors={errors.product}
             />
-          </Grid>
-          <Grid item xs={6}>
+            <Control.Input
+              name="method"
+              label="Metodo*"
+              value={values.method}
+              onChange={handleInputChange}
+              errors={errors.method}
+            />
             <Control.Input
               name="technicalVisit"
               label="Visita Tecnica*"
@@ -82,30 +127,175 @@ export default function FertilizationForm(props) {
               errors={errors.technicalVisit}
             />
             <Control.Input
-              name="composition.B"
-              label="Composicion B*"
-              value={values.composition.B}
+              name="observation"
+              label="Observaciones"
+              value={values.observation}
               onChange={handleInputChange}
-              errors={errors.composition}
+              errors={errors.observation}
             />
-            <Control.Input
-              name="composition.K2O"
-              label="Composicion K2O*"
-              value={values.composition.K2O}
-              onChange={handleInputChange}
-              errors={errors.composition}
-            />
-            <Control.Input
-              name="amount.cc"
-              label="Cantidad en Centrimetros cubicos*"
-              value={values.amount.cc}
-              onChange={handleInputChange}
-              errors={errors.amount}
-            />
+          </Grid>
+          <Grid item xs={6}>
+            <Grid container item xs={11} justify="center" alignItems="center">
+              <Typography variant="h6" component="h5">
+                Composición
+              </Typography>
+            </Grid>
+            <Divider variant="middle" />
+
+            <Grid container item xs={12} justify="flex-start" alignItems="center">
+            <Grid item xs={6}>
+              
+              <Control.Input
+                name="N"
+                label="N"
+                value={values.N}
+                onChange={handleInputChange}
+                errors={errors.N}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="P2O2"
+                label="P2O2"
+                value={values.P2O2}
+                onChange={handleInputChange}
+                errors={errors.P2O2}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="K2O"
+                label="K2O"
+                value={values.K2O}
+                onChange={handleInputChange}
+                errors={errors.K2O}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="CaO"
+                label="CaO"
+                value={values.CaO}
+                onChange={handleInputChange}
+                errors={errors.CaO}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="S"
+                label="S"
+                value={values.S}
+                onChange={handleInputChange}
+                errors={errors.S}
+                size='small'
+                type='Number'
+                />
+                </Grid>
+                <Grid item xs={6}>
+              
+              <Control.Input
+                name="Fe"
+                label="Fe"
+                value={values.Fe}
+                onChange={handleInputChange}
+                errors={errors.Fe}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="Mn"
+                label="Mn"
+                value={values.Mn}
+                onChange={handleInputChange}
+                errors={errors.Mn}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="Cu"
+                label="Cu"
+                value={values.Cu}
+                onChange={handleInputChange}
+                errors={errors.Cu}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="Zn"
+                label="Zn"
+                value={values.Zn}
+                onChange={handleInputChange}
+                errors={errors.Zn}
+                size='small'
+                type='Number'
+                />
+              <Control.Input
+                name="Mo"
+                label="Mo"
+                value={values.Mo}
+                onChange={handleInputChange}
+                errors={errors.Mo}
+                size='small'
+                type='Number'
+              />
+                </Grid>
+              <Control.Input
+                name="B"
+                label="B"
+                value={values.B}
+                onChange={handleInputChange}
+                errors={errors.B}
+                size='small'
+                type='Number'
+                />
+            </Grid>
+
+            <Grid container item xs={11} justify="center" alignItems="center">
+              <Typography variant="h6" component="h2">
+                Cantidad aplicada
+              </Typography>
+            </Grid>
+            <Divider variant="middle" />
+
+            <Grid
+              container
+              item
+              xs={12}
+              justify="flex-start"
+              alignItems="center"
+            >
+              <Grid item xs={6}>
+                <Control.Input
+                  name="cc"
+                  label="cc/lt*"
+                  value={values.cc}
+                  onChange={handleInputChange}
+                  errors={errors.cc}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Control.Input
+                  name="gr"
+                  label="gr/arbol*"
+                  value={values.gr}
+                  onChange={handleInputChange}
+                  errors={errors.gr}
+                />
+              </Grid>
+              
+                <Control.Input
+                  name="total"
+                  label="Total*"
+                  value={values.total}
+                  onChange={handleInputChange}
+                  errors={errors.total}
+                />
+              
+            </Grid>
             <div>
               <Control.Button type="submit" text="Agregar" />
               <Control.Button
-                text="Reset"
+                text="Reiniciar"
                 color="default"
                 onClick={resetForm}
               />
