@@ -48,7 +48,7 @@ const headCells = [
   { id: "cc", label: "Cedula" },
   { id: "birthDate", label: "Fecha de Nacimiento" },
   { id: "cellphone", label: "Celular" },
-  { id: "role", label: "Role" },
+  { id: "role", label: "Rol" },
   { id: "actions", label: "Acciones" },
 ];
 

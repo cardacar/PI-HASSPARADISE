@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
 const SvgMap = (props) => {
   const {
     data,
-    filterLote,
     setfilterLote,
     setConfirmDialog,
     confirmDialog,
@@ -33,10 +32,10 @@ const SvgMap = (props) => {
                   setConfirmDialog({
                     isOpen: true,
                     title: `${
-                      item.id == 20 ||
-                      item.id == 21 ||
-                      item.id == 22 ||
-                      item.id == 23
+                      parseInt(item.id, 10) === 20 ||
+                      parseInt(item.id, 10) === 21 ||
+                      parseInt(item.id, 10) === 22 ||
+                      parseInt(item.id, 10) === 23
                         ? `¿Estas seguro que deseas buscar por todos los lotes?`
                         : `Estas seguro que deseas buscar por el lote ${item.id}`
                     }`,
@@ -50,16 +49,15 @@ const SvgMap = (props) => {
                       setFilterFn({
                         fn: (items) => {
                           if (
-                            item.id == 20 ||
-                            item.id == 21 ||
-                            item.id == 22 ||
-                            item.id == 23
+                            parseInt(item.id, 10) === 20 ||
+                            parseInt(item.id, 10) === 21 ||
+                            parseInt(item.id, 10) === 22 ||
+                            parseInt(item.id, 10) === 23
                           )
                             return items;
                           else return items.filter((x) => x.lot === item.id);
                         },
                       });
-                      console.log(filterLote);
                     },
                   });
                 }}

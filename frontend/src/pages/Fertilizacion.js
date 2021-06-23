@@ -13,6 +13,7 @@ import {
   InputAdornment,
   Typography,
   Divider,
+
   /* Link */
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
@@ -27,13 +28,15 @@ import {
 } from "../services/FertilizationService";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EventNoteIcon from '@material-ui/icons/EventNote';
+import EventNoteIcon from "@material-ui/icons/EventNote";
 import ModalDialog from "../components/Modals/ModalDialog";
 import FertilizationForm from "./FertilizationForm";
 import Notification from "../components/Notification";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { mapData } from "../components/mapa/mapDataPath";
 import SvgMap from "../components/mapa/svgMap";
+import FertilizationAllData from './FertilizationAllData'
+
 
 //Estilo individual de la pagina
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +79,8 @@ const Fertilizacion = () => {
   });
   //Estado que me dice si el cuadro de dialogo es para agregar o para editar
   const [openEditOrAdd, setOpenEditOrAdd] = useState(false);
+  const [openMoreData, setOpenMoreData] = useState(false);
+  const [allData, setAllData] = useState(null)
   //Estado que controla la notificacion
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -90,6 +95,7 @@ const Fertilizacion = () => {
   });
   //Filtro para saber que lote es el que se esta buscando
   const [filterLote, setFilterLote] = useState(0);
+
 
   //Obtengo los datos de la bd e inicializo el estado de data
   useEffect(() => {
@@ -163,6 +169,7 @@ const Fertilizacion = () => {
         const newData = data;
         newData.forEach((fert) => {
           if (fert._id === response._id) {
+            fert.lot = response.lot;
             fert.fullName = response.fullName;
             fert.equipment = response.equipment;
             fert.product = response.product;
@@ -192,8 +199,13 @@ const Fertilizacion = () => {
   //Funcion que me dice si el dato es para editar
   const openModal = (item) => {
     setDataEdit(item);
-    setOpenEditOrAdd(true);
+    setOpenEditOrAdd(!openEditOrAdd);
   };
+
+  const openMoreDataModal = (item)=>{
+    setAllData(item);
+    setOpenMoreData(!openMoreData)
+  }
 
   //Funcion que me elimina un dato
   const onDelete = (id) => {
@@ -243,7 +255,11 @@ const Fertilizacion = () => {
           <Paper className={styles.pageContent}>
             <Grid container item xs={11}>
               <Typography variant="h6" component="h5">
-                {filterLote === 0 || filterLote==20 ||filterLote==21 || filterLote==22 || filterLote==23
+                {
+                parseInt(filterLote, 10) === 20 ||
+                parseInt(filterLote, 10) === 21 ||
+                parseInt(filterLote, 10) === 22 ||
+                parseInt(filterLote, 10) === 23
                   ? "Se muestran todos los lotes, por favor seleccione un lote en el mapa"
                   : `Busqueda por el lote ${filterLote}`}
               </Typography>
@@ -279,39 +295,49 @@ const Fertilizacion = () => {
               <TblHead />
               <TableBody>
                 {dataAfterPagingAndSorting().map((item) => (
-                  <TableRow key={item._id}>
-                    <TableCell>{item.fullName}</TableCell>
-                    <TableCell>{item.lot}</TableCell>
-                    <TableCell>{item.equipment}</TableCell>
-                    <TableCell>{item.method}</TableCell>
-                    <TableCell>{item.product}</TableCell>
-                    <TableCell>{item.technicalVisit}</TableCell>
-                    <TableCell>
-                      <Controls.ActionButton
-                        color="primary"
-                        onClick={() => {
-                          openModal(item);
-                        }}
-                      >
-                        <EditOutlined />
-                      </Controls.ActionButton>
-                      <Controls.ActionButton
-                        color="secondary"
-                        onClick={() => {
-                          setConfirmDialog({
-                            isOpen: true,
-                            title: "Estas seguro que deseas eliminar el dato?",
-                            subTitle: "Esta accion es irreversible",
-                            onConfirm: () => {
-                              onDelete(item._id);
-                            },
-                          });
-                        }}
-                      >
-                        <DeleteIcon />
-                      </Controls.ActionButton>
-                    </TableCell>
-                  </TableRow>
+                  
+                    <TableRow key={item._id}>
+                      <TableCell>{item.fullName}</TableCell>
+                      <TableCell>{item.lot}</TableCell>
+                      <TableCell>{item.equipment}</TableCell>
+                      <TableCell>{item.method}</TableCell>
+                      <TableCell>{item.product}</TableCell>
+                      <TableCell>{item.technicalVisit}</TableCell>
+                      <TableCell>
+                        <Controls.ActionButton
+                          color="primary"
+                          onClick={() => {
+                            openModal(item);
+                          }}
+                        >
+                          <EditOutlined />
+                        </Controls.ActionButton>
+                        <Controls.ActionButton
+                          color="primary"
+                          onClick={() => {
+                            openMoreDataModal(item);
+                          }}
+                        >
+                          <EventNoteIcon />
+                        </Controls.ActionButton>
+                        <Controls.ActionButton
+                          color="secondary"
+                          onClick={() => {
+                            setConfirmDialog({
+                              isOpen: true,
+                              title:
+                                "Estas seguro que deseas eliminar el dato?",
+                              subTitle: "Esta accion es irreversible",
+                              onConfirm: () => {
+                                onDelete(item._id);
+                              },
+                            });
+                          }}
+                        >
+                          <DeleteIcon />
+                        </Controls.ActionButton>
+                      </TableCell>
+                    </TableRow>
                 ))}
               </TableBody>
             </TblContainer>
@@ -325,6 +351,13 @@ const Fertilizacion = () => {
         setOpenModal={setOpenEditOrAdd}
       >
         <FertilizationForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
+      </ModalDialog>
+      <ModalDialog
+        title="Información Completa"
+        openModal={openMoreData}
+        setOpenModal={setOpenMoreData}
+      >
+        <FertilizationAllData data={allData}/>
       </ModalDialog>
       <Notification notify={notify} setNotify={setNotify} />
       <ConfirmDialog
