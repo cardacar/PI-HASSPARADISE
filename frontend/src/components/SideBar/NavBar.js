@@ -12,9 +12,9 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import Admin from "../../pages/Admin";
-import Fertilizacion from "../../pages/Fertilizacion";
-import Fumigacion from "../../pages/Fumigacion";
+import Admin from "../../pages/AdminUsers/Admin";
+import Fertilizacion from "../../pages/FertilizationPage/Fertilizacion";
+import Fumigacion from "../../pages/FumigationPage/Fumigacion";
 import Inventario from "../../pages/Inventario";
 import LaboresCultivo from "../../pages/LaboresCultivo";
 import Precipitacion from "../../pages/Precipitacion";

@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+//import TableUser from "../components/Table/TableUser";
 import {
   makeStyles,
   Paper,
@@ -11,24 +12,22 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
-import Controls from "../components/Controls/Control";
-import Header from "../components/Header";
-import { FaTractor } from "react-icons/fa";
-import UseTable from "../components/UseTable";
+import Controls from "../../components/Controls/Control";
+import Header from "../../components/Header";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import UseTable from "../../components/UseTable";
 import {
-  getFumigationAllAxios,
-  postFumigationnAxios,
-  putFumigationnAxios,
-  deleteFumigationAxios
-} from "../services/FumigationService";
+  getUsersAxios,
+  postUserAxios,
+  putUserAxios,
+  deleteUserAxios,
+} from "../../services/UsersService";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ModalDialog from "../components/Modals/ModalDialog";
+import ModalDialog from "../../components/Modals/ModalDialog";
 import UserForm from "./UserForm";
-import Notification from "../components/Notification";
-import ConfirmDialog from "../components/ConfirmDialog";
-import { mapData } from "../components/mapa/mapDataPath";
-import SvgMap from "../components/mapa/svgMap";
+import Notification from '../../components/Notification';
+import ConfirmDialog from "../../components/ConfirmDialog";
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -45,18 +44,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const headCells = [
-  { id: "fullName", label: "Nombre empleado" },
-  { id: "lot", label: "Lote" },
-  { id: "timeFinish", label: "Tiempo" },
-  { id: "supplies", label: "Suministro" },
-  { id: "activeIngredients", label: "Ingrediente activo" },
-  { id: "pr", label: "pr" },
-  { id: "pc", label: "pc" },
-  { id: "plague", label: "plague" },
+  { id: "fullName", label: "Nombre Completo" },
+  { id: "cc", label: "Cedula" },
+  { id: "birthDate", label: "Fecha de Nacimiento" },
+  { id: "cellphone", label: "Celular" },
+  { id: "role", label: "Rol" },
   { id: "actions", label: "Acciones" },
 ];
 
-const Fumigacion = () => {
+const Admin = () => {
   const styles = useStyles();
   const [dataEdit, setDataEdit] = useState(null);
   const [data, setData] = useState([]);
@@ -76,10 +72,9 @@ const Fumigacion = () => {
     title: "",
     subTitle: "",
   });
-  const [filterLote, setFilterLote] = useState(0);
 
   useEffect(() => {
-    getFumigationAllAxios().then((user) => {
+    getUsersAxios().then((user) => {
       setData(user);
     });
   }, [setData]);
@@ -106,13 +101,13 @@ const Fumigacion = () => {
 
   const addOrEdit = (user, resetForm) => {
     if (user._id === 0)
-    postFumigationnAxios(user)
+      postUserAxios(user)
         .then((response) => {
           setData(data.concat(response));
         })
         .catch((error) => console.log(error));
     else
-    putFumigationnAxios(user, user._id).then((response) => {
+      putUserAxios(user, user._id).then((response) => {
         const newData = data;
         console.log(newData);
         newData.forEach((user) => {
@@ -129,7 +124,7 @@ const Fumigacion = () => {
     resetForm();
     setDataEdit(null);
     setOpenEditOrAdd(false);
-    getFumigationAllAxios().then((user) => {
+    getUsersAxios().then((user) => {
       setData(user);
     });
     setNotify({
@@ -149,8 +144,8 @@ const Fumigacion = () => {
       ...confirmDialog,
       isOpen: false,
     });
-    deleteFumigationAxios(id);
-    getFumigationAllAxios().then((user) => {
+    deleteUserAxios(id);
+    getUsersAxios().then((user) => {
       setData(user);
     });
     setNotify({
@@ -165,20 +160,9 @@ const Fumigacion = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Header
-            title="Fumigacion"
-            subTitle="Administracion de fumigacion de los cultivos"
-            icon={<FaTractor />}
-          />
-        </Grid>
-
-        <Grid container item xs={12} justify="center" alignItems="center">
-          <SvgMap
-            data={mapData}
-            filterLote={filterLote}
-            setfilterLote={setFilterLote}
-            setConfirmDialog={setConfirmDialog}
-            confirmDialog={confirmDialog}
-            setFilterFn={setFilterFn}
+            title="Admin"
+            subTitle="Administracion de usuarios"
+            icon={<AccountBoxIcon />}
           />
         </Grid>
 
@@ -186,7 +170,7 @@ const Fumigacion = () => {
           <Paper className={styles.pageContent}>
             <Toolbar>
               <Controls.Input
-                label="Buscar dato"
+                label="Buscar usuario"
                 className={styles.searchInput}
                 InputProps={{
                   startAdornment: (
@@ -215,14 +199,12 @@ const Fumigacion = () => {
               <TableBody>
                 {dataAfterPagingAndSorting().map((item) => (
                   <TableRow key={item._id}>
+
                     <TableCell>{item.fullName}</TableCell>
-                    <TableCell>{item.lot}</TableCell>
-                    <TableCell>{item.timeFinish}</TableCell>
-                    <TableCell>{item.supplies}</TableCell>
-                    <TableCell>{item.activeIngredients}</TableCell>
-                    <TableCell>{item.pr}</TableCell>
-                    <TableCell>{item.pc}</TableCell>
-                    <TableCell>{item.plague}</TableCell>
+                    <TableCell>{item.cc}</TableCell>
+                    <TableCell>{item.birthDate}</TableCell>
+                    <TableCell>{item.cellphone}</TableCell>
+                    <TableCell>{item.role}</TableCell>
                     <TableCell>
                       <Controls.ActionButton
                         color="primary"
@@ -236,13 +218,13 @@ const Fumigacion = () => {
                         color="secondary"
                         onClick={() => {
                           setConfirmDialog({
-                            isOpen: true,
-                            title: "Estas seguro que deseas eliminar el dato?",
-                            subTitle: "Esta accion es irreversible",
-                            onConfirm: () => {
-                              onDelete(item._id);
-                            },
-                          });
+                            isOpen:true,
+                            title:"Estas seguro que deseas eliminar el dato?",
+                            subTitle:"Esta accion es irreversible",
+                            onConfirm:()=>{
+                              onDelete(item._id)
+                            }
+                          })
                         }}
                       >
                         <DeleteIcon fontSize="small" />
@@ -263,7 +245,7 @@ const Fumigacion = () => {
       >
         <UserForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
       </ModalDialog>
-      <Notification notify={notify} setNotify={setNotify} />
+      <Notification notify={notify} setNotify={setNotify}/>
       <ConfirmDialog
         confirmDialog={confirmDialog}
         setConfirmDialog={setConfirmDialog}
@@ -272,4 +254,4 @@ const Fumigacion = () => {
   );
 };
 
-export default Fumigacion;
+export default Admin;

@@ -1,7 +1,7 @@
 //Imports necesarios
 import React, { Fragment, useState, useEffect } from "react";
 import { FaPoop } from "react-icons/fa";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import {
   Grid,
   Paper,
@@ -18,23 +18,23 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
-import Controls from "../components/Controls/Control";
-import useTable from "../components/UseTable";
+import Controls from "../../components/Controls/Control";
+import useTable from "../../components/UseTable";
 import {
   getFertilizationAllAxios,
   deleteFertilizationAxios,
   postFertilizationAxios,
   putFertilizationAxios,
-} from "../services/FertilizationService";
+} from "../../services/FertilizationService";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EventNoteIcon from "@material-ui/icons/EventNote";
-import ModalDialog from "../components/Modals/ModalDialog";
+import ModalDialog from "../../components/Modals/ModalDialog";
 import FertilizationForm from "./FertilizationForm";
-import Notification from "../components/Notification";
-import ConfirmDialog from "../components/ConfirmDialog";
-import { mapData } from "../components/mapa/mapDataPath";
-import SvgMap from "../components/mapa/svgMap";
+import Notification from "../../components/Notification";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import { mapData } from "../../components/mapa/mapDataPath";
+import SvgMap from "../../components/mapa/svgMap";
 import FertilizationAllData from './FertilizationAllData'
 
 

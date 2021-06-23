@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from "react";
-//import TableUser from "../components/Table/TableUser";
 import {
   makeStyles,
   Paper,
@@ -9,25 +8,31 @@ import {
   Toolbar,
   InputAdornment,
   Grid,
+  Divider,
+  Typography
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
-import Controls from "../components/Controls/Control";
-import Header from "../components/Header";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import UseTable from "../components/UseTable";
+import Controls from "../../components/Controls/Control";
+import Header from "../../components/Header";
+import { FaTractor } from "react-icons/fa";
+import UseTable from "../../components/UseTable";
 import {
-  getUsersAxios,
-  postUserAxios,
-  putUserAxios,
-  deleteUserAxios,
-} from "../services/UsersService";
+  getFumigationAllAxios,
+  postFumigationnAxios,
+  putFumigationnAxios,
+  deleteFumigationAxios,
+} from "../../services/FumigationService";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ModalDialog from "../components/Modals/ModalDialog";
-import UserForm from "./UserForm";
-import Notification from '../components/Notification';
-import ConfirmDialog from "../components/ConfirmDialog";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import ModalDialog from "../../components/Modals/ModalDialog";
+import FumigationForm from "./FumigationForm";
+import Notification from "../../components/Notification";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import { mapData } from "../../components/mapa/mapDataPath";
+import SvgMap from "../../components/mapa/svgMap";
+import FumigationAllData from "./FumigationAllData";
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -44,15 +49,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const headCells = [
-  { id: "fullName", label: "Nombre Completo" },
-  { id: "cc", label: "Cedula" },
-  { id: "birthDate", label: "Fecha de Nacimiento" },
-  { id: "cellphone", label: "Celular" },
-  { id: "role", label: "Rol" },
+  { id: "fullName", label: "Nombre empleado" },
+  { id: "lot", label: "Lote" },
+  { id: "supplies", label: "Insumo" },
+  { id: "activeIngredients", label: "Ingrediente activo" },
+  { id: "plague", label: "Plaga" },
   { id: "actions", label: "Acciones" },
 ];
 
-const Admin = () => {
+const Fumigacion = () => {
   const styles = useStyles();
   const [dataEdit, setDataEdit] = useState(null);
   const [data, setData] = useState([]);
@@ -62,6 +67,8 @@ const Admin = () => {
     },
   });
   const [openEditOrAdd, setOpenEditOrAdd] = useState(false);
+  const [openMoreData, setOpenMoreData] = useState(false);
+  const [allData, setAllData] = useState(null);
   const [notify, setNotify] = useState({
     isOpen: false,
     message: "",
@@ -72,9 +79,10 @@ const Admin = () => {
     title: "",
     subTitle: "",
   });
+  const [filterLote, setFilterLote] = useState(0);
 
   useEffect(() => {
-    getUsersAxios().then((user) => {
+    getFumigationAllAxios().then((user) => {
       setData(user);
     });
   }, [setData]);
@@ -101,13 +109,13 @@ const Admin = () => {
 
   const addOrEdit = (user, resetForm) => {
     if (user._id === 0)
-      postUserAxios(user)
+      postFumigationnAxios(user)
         .then((response) => {
           setData(data.concat(response));
         })
         .catch((error) => console.log(error));
     else
-      putUserAxios(user, user._id).then((response) => {
+      putFumigationnAxios(user, user._id).then((response) => {
         const newData = data;
         console.log(newData);
         newData.forEach((user) => {
@@ -124,7 +132,7 @@ const Admin = () => {
     resetForm();
     setDataEdit(null);
     setOpenEditOrAdd(false);
-    getUsersAxios().then((user) => {
+    getFumigationAllAxios().then((user) => {
       setData(user);
     });
     setNotify({
@@ -138,14 +146,18 @@ const Admin = () => {
     setDataEdit(item);
     setOpenEditOrAdd(true);
   };
+  const openMoreDataModal = (item) => {
+    setAllData(item);
+    setOpenMoreData(!openMoreData);
+  };
 
   const onDelete = (id) => {
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false,
     });
-    deleteUserAxios(id);
-    getUsersAxios().then((user) => {
+    deleteFumigationAxios(id);
+    getFumigationAllAxios().then((user) => {
       setData(user);
     });
     setNotify({
@@ -160,17 +172,41 @@ const Admin = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Header
-            title="Admin"
-            subTitle="Administracion de usuarios"
-            icon={<AccountBoxIcon />}
+            title="Fumigacion"
+            subTitle="Administracion de fumigacion de los cultivos"
+            icon={<FaTractor />}
+          />
+        </Grid>
+
+        <Grid container item xs={12} justify="center" alignItems="center">
+          <SvgMap
+            data={mapData}
+            filterLote={filterLote}
+            setfilterLote={setFilterLote}
+            setConfirmDialog={setConfirmDialog}
+            confirmDialog={confirmDialog}
+            setFilterFn={setFilterFn}
           />
         </Grid>
 
         <Grid item xs={12}>
           <Paper className={styles.pageContent}>
+            <Grid container item xs={11}>
+              <Typography variant="h6" component="h5">
+                {parseInt(filterLote, 10) === 0 ||
+                parseInt(filterLote, 10) === 20 ||
+                parseInt(filterLote, 10) === 21 ||
+                parseInt(filterLote, 10) === 22 ||
+                parseInt(filterLote, 10) === 23
+                  ? "Se muestran todos los lotes, por favor seleccione un lote en el mapa"
+                  : `Busqueda por el lote ${filterLote}`}
+              </Typography>
+            </Grid>
+            <Divider variant="middle" />
+            <br />
             <Toolbar>
               <Controls.Input
-                label="Buscar usuario"
+                label="Buscar dato"
                 className={styles.searchInput}
                 InputProps={{
                   startAdornment: (
@@ -199,12 +235,11 @@ const Admin = () => {
               <TableBody>
                 {dataAfterPagingAndSorting().map((item) => (
                   <TableRow key={item._id}>
-
                     <TableCell>{item.fullName}</TableCell>
-                    <TableCell>{item.cc}</TableCell>
-                    <TableCell>{item.birthDate}</TableCell>
-                    <TableCell>{item.cellphone}</TableCell>
-                    <TableCell>{item.role}</TableCell>
+                    <TableCell>{item.lot}</TableCell>
+                    <TableCell>{item.supplies}</TableCell>
+                    <TableCell>{item.activeIngredients}</TableCell>
+                    <TableCell>{item.plague}</TableCell>
                     <TableCell>
                       <Controls.ActionButton
                         color="primary"
@@ -215,16 +250,25 @@ const Admin = () => {
                         <EditOutlined fontSize="small" />
                       </Controls.ActionButton>
                       <Controls.ActionButton
+                        color="primary"
+                        onClick={() => {
+                          openMoreDataModal(item);
+                          console.log(allData);
+                        }}
+                      >
+                        <EventNoteIcon />
+                      </Controls.ActionButton>
+                      <Controls.ActionButton
                         color="secondary"
                         onClick={() => {
                           setConfirmDialog({
-                            isOpen:true,
-                            title:"Estas seguro que deseas eliminar el dato?",
-                            subTitle:"Esta accion es irreversible",
-                            onConfirm:()=>{
-                              onDelete(item._id)
-                            }
-                          })
+                            isOpen: true,
+                            title: "Estas seguro que deseas eliminar el dato?",
+                            subTitle: "Esta accion es irreversible",
+                            onConfirm: () => {
+                              onDelete(item._id);
+                            },
+                          });
                         }}
                       >
                         <DeleteIcon fontSize="small" />
@@ -239,13 +283,22 @@ const Admin = () => {
         </Grid>
       </Grid>
       <ModalDialog
-        title="Formulario de usuarios"
+        title="Formulario para la edición de fumigacion"
         openModal={openEditOrAdd}
         setOpenModal={setOpenEditOrAdd}
       >
-        <UserForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
+        <FumigationForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
       </ModalDialog>
-      <Notification notify={notify} setNotify={setNotify}/>
+      <ModalDialog
+        title="Información completa"
+        openModal={openMoreData}
+        setOpenModal={setOpenMoreData}
+      >
+        <FumigationAllData dataForEdit={dataEdit} addOrEdit={addOrEdit} />
+      </ModalDialog>
+
+      <Notification notify={notify} setNotify={setNotify} />
+
       <ConfirmDialog
         confirmDialog={confirmDialog}
         setConfirmDialog={setConfirmDialog}
@@ -254,4 +307,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Fumigacion;

@@ -10,13 +10,13 @@ const fumigationSchema = new Schema(
     pr: String,
     pc: String,
     plague: String,
-    dose: {},
+    dose: {
+      cc:{type: Number, default:0},
+      gr:{type: Number, default:0},
+    },
     appliedAmount: String,
     totalSpent: String,
-    equipment: {
-      backPump: {type: Boolean, default: false},
-      stationary: {type: Boolean, default: false},
-    },
+    equipment: String,
     surplus: String,
     technicalVisit: String,
     meteorologicalCondition: String,

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { Grid, Typography, Divider } from "@material-ui/core";
-import Control from "../components/Controls/Control";
-import { useForm, Form } from "../components/Form";
+import Control from "../../components/Controls/Control";
+import { useForm, Form } from "../../components/Form";
 
 const initialFValues = {
   _id: 0,
@@ -35,7 +35,7 @@ export default function FertilizationForm(props) {
 
     return Object.values(temp).every((x) => x === "");
   };
-  const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
+  const { values, setValues, errors, /* setErrors */ handleInputChange, resetForm } =
     useForm(initialFValues, true, validate);
 
   const handleSubmit = (e) => {

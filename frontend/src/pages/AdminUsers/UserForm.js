@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect } from "react";
 import { Grid } from "@material-ui/core";
-import Control from "../components/Controls/Control";
-import { useForm, Form } from "../components/Form";
-import * as userService from "../services/UsersService";
+import Control from "../../components/Controls/Control";
+import { useForm, Form } from "../../components/Form";
+import * as userService from "../../services/UsersService";
 
 const initialFValues = {
   _id: 0,
