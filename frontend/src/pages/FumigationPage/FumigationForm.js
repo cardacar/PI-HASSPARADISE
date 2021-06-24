@@ -30,8 +30,13 @@ const FumigationForm = (props) => {
 
     return Object.values(temp).every((x) => x === "");
   };
-  const { values, setValues, errors, /* setErrors, */ handleInputChange, resetForm } =
-    useForm(initialFuValues, true, validate);
+  const {
+    values,
+    setValues,
+    errors,
+    /* setErrors, */ handleInputChange,
+    resetForm,
+  } = useForm(initialFuValues, true, validate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,7 +105,7 @@ const FumigationForm = (props) => {
             />
             <Control.Input
               name="supplies"
-              label="Suministro*"
+              label="Insumo*"
               value={values.supplies}
               onChange={handleInputChange}
               errors={errors.supplies}
@@ -139,9 +144,6 @@ const FumigationForm = (props) => {
               onChange={handleInputChange}
               errors={errors.technicalVisit}
             />
-            
-            
-
           </Grid>
           <Grid item xs={6}>
             <Control.Input
@@ -157,6 +159,7 @@ const FumigationForm = (props) => {
                 Dosis
               </Typography>
             </Grid>
+
             <Divider variant="middle" />
 
             <Grid
@@ -175,7 +178,7 @@ const FumigationForm = (props) => {
                   errors={errors.cc}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <Control.Input
                   name="gr"
                   label="gr/lt*"
@@ -206,7 +209,7 @@ const FumigationForm = (props) => {
               onChange={handleInputChange}
               errors={errors.equipment}
             />
-            
+
             <Control.Input
               name="surplus"
               label="Sobrante de la mezcla*"
@@ -221,7 +224,7 @@ const FumigationForm = (props) => {
               onChange={handleInputChange}
               errors={errors.meteorologicalCondition}
             />
-            
+
             <div>
               <Control.Button type="submit" text="Agregar" />
               <Control.Button
@@ -230,7 +233,6 @@ const FumigationForm = (props) => {
                 onClick={resetForm}
               />
             </div>
-
           </Grid>
         </Grid>
       </Form>

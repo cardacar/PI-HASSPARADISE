@@ -31,6 +31,9 @@ const FertilizationAllData = (props) => {
 
   return (
     <Fragment>
+      <Typography className={style.pos} color="textSecondary">
+        {data.createdAt.split('T')[0]}
+      </Typography>
       <Card className={style.root} variant="outlined">
         <CardContent>
           <Grid container item xs={12}>

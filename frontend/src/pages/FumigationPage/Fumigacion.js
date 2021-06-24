@@ -314,8 +314,9 @@ const Fumigacion = () => {
         title="Información completa"
         openModal={openMoreData}
         setOpenModal={setOpenMoreData}
+
       >
-        <FumigationAllData dataForEdit={dataEdit} addOrEdit={addOrEdit} />
+        <FumigationAllData data={allData} />
       </ModalDialog>
 
       <Notification notify={notify} setNotify={setNotify} />

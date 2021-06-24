@@ -25,7 +25,9 @@ const ModalDialog = (props) => {
                 <div style={{display: 'flex'}}>
                     <Typography variant="h6" component='div' style={{flexGrow: 1}}>
                         {title}
+                    
                     </Typography>
+                    
                     <Controls.ActionButton
                         color="secondary"
                         onClick={()=>{setOpenModal(false)}}>
