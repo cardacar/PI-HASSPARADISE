@@ -9,7 +9,7 @@ import {
   InputAdornment,
   Grid,
   Divider,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
@@ -107,24 +107,45 @@ const Fumigacion = () => {
     });
   };
 
-  const addOrEdit = (user, resetForm) => {
-    if (user._id === 0)
-      postFumigationnAxios(user)
+  const addOrEdit = (dataFum, resetForm) => {
+    const newDataFu = {
+      _id: dataFum._id,
+      fullName: dataFum.fullName,
+      lot: dataFum.lot,
+      timeFinish: dataFum.timeFinish,
+      supplies: dataFum.supplies,
+      activeIngredients: dataFum.activeIngredients,
+      pr: dataFum.pr,
+      pc: dataFum.pc,
+      plague: dataFum.plague,
+      dose: {
+        cc:dataFum.cc,
+        gr:dataFum.gr,
+      },
+      appliedAmount: dataFum.appliedAmount,
+      totalSpent: dataFum.totalSpent,
+      equipment: dataFum.equipment,
+      surplus: dataFum.surplus,
+      technicalVisit: dataFum.technicalVisit,
+      meteorologicalCondition: dataFum.meteorologicalCondition,
+    };
+    if (newDataFu._id === 0)
+      postFumigationnAxios(newDataFu)
         .then((response) => {
           setData(data.concat(response));
         })
         .catch((error) => console.log(error));
     else
-      putFumigationnAxios(user, user._id).then((response) => {
+      putFumigationnAxios(newDataFu, newDataFu._id).then((response) => {
         const newData = data;
         console.log(newData);
-        newData.forEach((user) => {
-          if (user._id === response._id) {
-            user.fullName = response.fullName;
-            user.cc = response.cc;
-            user.birthDate = response.birthDate;
-            user.role = response.role;
-            user.cellphone = response.cellphone;
+        newData.forEach((dataFum) => {
+          if (dataFum._id === response._id) {
+            dataFum.fullName = response.fullName;
+            dataFum.lot = response.lot;
+            dataFum.supplies = response.supplies;
+            dataFum.activeIngredients = response.activeIngredients;
+            dataFum.plague = response.cellphone;
           }
         });
         setData(newData);
@@ -132,8 +153,8 @@ const Fumigacion = () => {
     resetForm();
     setDataEdit(null);
     setOpenEditOrAdd(false);
-    getFumigationAllAxios().then((user) => {
-      setData(user);
+    getFumigationAllAxios().then((dataFum) => {
+      setData(dataFum);
     });
     setNotify({
       isOpen: true,
@@ -157,8 +178,8 @@ const Fumigacion = () => {
       isOpen: false,
     });
     deleteFumigationAxios(id);
-    getFumigationAllAxios().then((user) => {
-      setData(user);
+    getFumigationAllAxios().then((dataFum) => {
+      setData(dataFum);
     });
     setNotify({
       isOpen: true,

@@ -30,7 +30,7 @@ const FumigationForm = (props) => {
 
     return Object.values(temp).every((x) => x === "");
   };
-  const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
+  const { values, setValues, errors, /* setErrors, */ handleInputChange, resetForm } =
     useForm(initialFuValues, true, validate);
 
   const handleSubmit = (e) => {
@@ -69,7 +69,7 @@ const FumigationForm = (props) => {
 
   return (
     <Fragment>
-      <Form handleSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={6}>
             <Control.Input
@@ -92,7 +92,6 @@ const FumigationForm = (props) => {
               label="Tiempo de finalizacion*"
               value={values.timeFinish}
               type="time"
-              defaultValue="07:30"
               onChange={handleInputChange}
               errors={errors.timeFinish}
               InputLabelProps={{
@@ -133,16 +132,106 @@ const FumigationForm = (props) => {
                 />
               </Grid>
             </Grid>
+            <Control.Input
+              name="technicalVisit"
+              label="Visita técnica*"
+              value={values.technicalVisit}
+              onChange={handleInputChange}
+              errors={errors.technicalVisit}
+            />
+            
+            
+
           </Grid>
           <Grid item xs={6}>
             <Control.Input
-                  name="plague"
-                  label="Plaga*"
-                  value={values.plague}
-                  onChange={handleInputChange}
-                  errors={errors.plague}
-                />
+              name="plague"
+              label="Plaga*"
+              value={values.plague}
+              onChange={handleInputChange}
+              errors={errors.plague}
+            />
+
+            <Grid container item xs={11} justify="center" alignItems="center">
+              <Typography variant="h6" component="h2">
+                Dosis
+              </Typography>
             </Grid>
+            <Divider variant="middle" />
+
+            <Grid
+              container
+              item
+              xs={12}
+              justify="flex-start"
+              alignItems="center"
+            >
+              <Grid item xs={6}>
+                <Control.Input
+                  name="cc"
+                  label="cc/lt*"
+                  value={values.cc}
+                  onChange={handleInputChange}
+                  errors={errors.cc}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Control.Input
+                  name="gr"
+                  label="gr/lt*"
+                  value={values.gr}
+                  onChange={handleInputChange}
+                  errors={errors.gr}
+                />
+              </Grid>
+            </Grid>
+            <Control.Input
+              name="appliedAmount"
+              label="Cantidad aplicada (Agua Lt)*"
+              value={values.appliedAmount}
+              onChange={handleInputChange}
+              errors={errors.appliedAmount}
+            />
+            <Control.Input
+              name="totalSpent"
+              label="Total de producto gastado(cc)*"
+              value={values.totalSpent}
+              onChange={handleInputChange}
+              errors={errors.totalSpent}
+            />
+            <Control.Input
+              name="equipment"
+              label="Equipo de aplicacion*"
+              value={values.equipment}
+              onChange={handleInputChange}
+              errors={errors.equipment}
+            />
+            
+            <Control.Input
+              name="surplus"
+              label="Sobrante de la mezcla*"
+              value={values.surplus}
+              onChange={handleInputChange}
+              errors={errors.surplus}
+            />
+            <Control.Input
+              name="meteorologicalCondition"
+              label="Condición meteorologica*"
+              value={values.meteorologicalCondition}
+              onChange={handleInputChange}
+              errors={errors.meteorologicalCondition}
+            />
+            
+            <div>
+              <Control.Button type="submit" text="Agregar" />
+              <Control.Button
+                text="Reiniciar"
+                color="default"
+                onClick={resetForm}
+              />
+            </div>
+
+          </Grid>
         </Grid>
       </Form>
     </Fragment>
