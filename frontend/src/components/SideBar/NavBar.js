@@ -15,8 +15,8 @@ import {
 import Admin from "../../pages/AdminUsers/Admin";
 import Fertilizacion from "../../pages/FertilizationPage/Fertilizacion";
 import Fumigacion from "../../pages/FumigationPage/Fumigacion";
+import Sowing from '../../pages/SowingPage/Sowing'
 import Inventario from "../../pages/Inventario";
-import LaboresCultivo from "../../pages/LaboresCultivo";
 import Precipitacion from "../../pages/Precipitacion";
 
 const NavBar = () => {
@@ -63,8 +63,8 @@ const NavBar = () => {
             <Route exact path="/admin/Fertilizacion">
               <Fertilizacion/>
             </Route>
-            <Route exact path="/admin/LaboresCultivo">
-              <LaboresCultivo/>
+            <Route exact path="/admin/Siembra">
+              <Sowing/>
             </Route>
             <Route exact path="/admin/Fumigacion">
               <Fumigacion/>

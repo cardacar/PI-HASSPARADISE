@@ -3,7 +3,7 @@ import React from 'react'
 const Precipitacion = () => {
     return (
         <div>
-            <h1>Precipitacion</h1>
+            <h1>En proceso de construcción ...</h1>
         </div>
     )
 }

@@ -29,7 +29,7 @@ const App = () => {
             />
           <Route
             exact
-            path="/admin/LaboresCultivo"
+            path="/admin/Siembra"
             component={() => <Navbar />}
             />
           <Route

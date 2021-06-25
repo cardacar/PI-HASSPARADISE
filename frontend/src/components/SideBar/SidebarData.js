@@ -1,5 +1,5 @@
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import {FaBong, FaTractor, FaPoop, FaDollyFlatbed, FaSignOutAlt, FaCloudSunRain} from 'react-icons/fa'
+import {FaBong, FaTree, FaPoop, FaDollyFlatbed, FaSignOutAlt, FaCloudSunRain} from 'react-icons/fa'
 import React from 'react'
 
 //array de obtjetos que contendran la data del sidebar
@@ -15,9 +15,9 @@ export const SidebarData = [
         link: "/admin/Fertilizacion"
     },
     {
-        title: "Labores de cultivo",
-        icon: <FaTractor/>,
-        link: "/admin/LaboresCultivo"
+        title: "Siembra",
+        icon: <FaTree/>,
+        link: "/admin/Siembra"
     },
     {
         title: "Fumigacion",
