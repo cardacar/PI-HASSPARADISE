@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
  */
 
 (async ()=>{
-    //const MONGODB_URI_LOCAL='mongodb://localhost/hasspd'
-    const USER = 'cardacar'
+    const MONGODB_URI_LOCAL='mongodb://localhost/hasspd'
+    /* const USER = 'cardacar'
     const PASSWORD = '822jtZZKSNmrvWS'
     const URI = `mongodb+srv://${USER}:${PASSWORD}@hassparadise.lb5ya.mongodb.net/hasspd?retryWrites=true&w=majority`
-
+     */
     try{
-        const db = await mongoose.connect(URI, {
+        const db = await mongoose.connect(MONGODB_URI_LOCAL, {
             useNewUrlParser:true,
             useUnifiedTopology:true,
             useFindAndModify:false,

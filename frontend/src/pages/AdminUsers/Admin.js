@@ -12,22 +12,22 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
-import Controls from "../components/Controls/Control";
-import Header from "../components/Header";
+import Controls from "../../components/Controls/Control";
+import Header from "../../components/Header";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import UseTable from "../components/UseTable";
+import UseTable from "../../components/UseTable";
 import {
   getUsersAxios,
   postUserAxios,
   putUserAxios,
   deleteUserAxios,
-} from "../services/UsersService";
+} from "../../services/UsersService";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ModalDialog from "../components/Modals/ModalDialog";
+import ModalDialog from "../../components/Modals/ModalDialog";
 import UserForm from "./UserForm";
-import Notification from '../components/Notification';
-import ConfirmDialog from "../components/ConfirmDialog";
+import Notification from '../../components/Notification';
+import ConfirmDialog from "../../components/ConfirmDialog";
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -48,7 +48,7 @@ const headCells = [
   { id: "cc", label: "Cedula" },
   { id: "birthDate", label: "Fecha de Nacimiento" },
   { id: "cellphone", label: "Celular" },
-  { id: "role", label: "Role" },
+  { id: "role", label: "Rol" },
   { id: "actions", label: "Acciones" },
 ];
 

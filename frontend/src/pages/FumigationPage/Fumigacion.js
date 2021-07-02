@@ -8,27 +8,31 @@ import {
   Toolbar,
   InputAdornment,
   Grid,
+  Divider,
+  Typography,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
-import Controls from "../components/Controls/Control";
-import Header from "../components/Header";
+import Controls from "../../components/Controls/Control";
+import Header from "../../components/Header";
 import { FaTractor } from "react-icons/fa";
-import UseTable from "../components/UseTable";
+import UseTable from "../../components/UseTable";
 import {
   getFumigationAllAxios,
   postFumigationnAxios,
   putFumigationnAxios,
-  deleteFumigationAxios
-} from "../services/FumigationService";
+  deleteFumigationAxios,
+} from "../../services/FumigationService";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ModalDialog from "../components/Modals/ModalDialog";
-import UserForm from "./UserForm";
-import Notification from "../components/Notification";
-import ConfirmDialog from "../components/ConfirmDialog";
-import { mapData } from "../components/mapa/mapDataPath";
-import SvgMap from "../components/mapa/svgMap";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import ModalDialog from "../../components/Modals/ModalDialog";
+import FumigationForm from "./FumigationForm";
+import Notification from "../../components/Notification";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import { mapData } from "../../components/mapa/mapDataPath";
+import SvgMap from "../../components/mapa/svgMap";
+import FumigationAllData from "./FumigationAllData";
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -47,12 +51,9 @@ const useStyles = makeStyles((theme) => ({
 const headCells = [
   { id: "fullName", label: "Nombre empleado" },
   { id: "lot", label: "Lote" },
-  { id: "timeFinish", label: "Tiempo" },
-  { id: "supplies", label: "Suministro" },
+  { id: "supplies", label: "Insumo" },
   { id: "activeIngredients", label: "Ingrediente activo" },
-  { id: "pr", label: "pr" },
-  { id: "pc", label: "pc" },
-  { id: "plague", label: "plague" },
+  { id: "plague", label: "Plaga" },
   { id: "actions", label: "Acciones" },
 ];
 
@@ -66,6 +67,8 @@ const Fumigacion = () => {
     },
   });
   const [openEditOrAdd, setOpenEditOrAdd] = useState(false);
+  const [openMoreData, setOpenMoreData] = useState(false);
+  const [allData, setAllData] = useState(null);
   const [notify, setNotify] = useState({
     isOpen: false,
     message: "",
@@ -104,24 +107,45 @@ const Fumigacion = () => {
     });
   };
 
-  const addOrEdit = (user, resetForm) => {
-    if (user._id === 0)
-    postFumigationnAxios(user)
+  const addOrEdit = (dataFum, resetForm) => {
+    const newDataFu = {
+      _id: dataFum._id,
+      fullName: dataFum.fullName,
+      lot: dataFum.lot,
+      timeFinish: dataFum.timeFinish,
+      supplies: dataFum.supplies,
+      activeIngredients: dataFum.activeIngredients,
+      pr: dataFum.pr,
+      pc: dataFum.pc,
+      plague: dataFum.plague,
+      dose: {
+        cc:dataFum.cc,
+        gr:dataFum.gr,
+      },
+      appliedAmount: dataFum.appliedAmount,
+      totalSpent: dataFum.totalSpent,
+      equipment: dataFum.equipment,
+      surplus: dataFum.surplus,
+      technicalVisit: dataFum.technicalVisit,
+      meteorologicalCondition: dataFum.meteorologicalCondition,
+    };
+    if (newDataFu._id === 0)
+      postFumigationnAxios(newDataFu)
         .then((response) => {
           setData(data.concat(response));
         })
         .catch((error) => console.log(error));
     else
-    putFumigationnAxios(user, user._id).then((response) => {
+      putFumigationnAxios(newDataFu, newDataFu._id).then((response) => {
         const newData = data;
         console.log(newData);
-        newData.forEach((user) => {
-          if (user._id === response._id) {
-            user.fullName = response.fullName;
-            user.cc = response.cc;
-            user.birthDate = response.birthDate;
-            user.role = response.role;
-            user.cellphone = response.cellphone;
+        newData.forEach((dataFum) => {
+          if (dataFum._id === response._id) {
+            dataFum.fullName = response.fullName;
+            dataFum.lot = response.lot;
+            dataFum.supplies = response.supplies;
+            dataFum.activeIngredients = response.activeIngredients;
+            dataFum.plague = response.cellphone;
           }
         });
         setData(newData);
@@ -129,8 +153,8 @@ const Fumigacion = () => {
     resetForm();
     setDataEdit(null);
     setOpenEditOrAdd(false);
-    getFumigationAllAxios().then((user) => {
-      setData(user);
+    getFumigationAllAxios().then((dataFum) => {
+      setData(dataFum);
     });
     setNotify({
       isOpen: true,
@@ -143,6 +167,10 @@ const Fumigacion = () => {
     setDataEdit(item);
     setOpenEditOrAdd(true);
   };
+  const openMoreDataModal = (item) => {
+    setAllData(item);
+    setOpenMoreData(!openMoreData);
+  };
 
   const onDelete = (id) => {
     setConfirmDialog({
@@ -150,8 +178,8 @@ const Fumigacion = () => {
       isOpen: false,
     });
     deleteFumigationAxios(id);
-    getFumigationAllAxios().then((user) => {
-      setData(user);
+    getFumigationAllAxios().then((dataFum) => {
+      setData(dataFum);
     });
     setNotify({
       isOpen: true,
@@ -184,6 +212,19 @@ const Fumigacion = () => {
 
         <Grid item xs={12}>
           <Paper className={styles.pageContent}>
+            <Grid container item xs={11}>
+              <Typography variant="h6" component="h5">
+                {parseInt(filterLote, 10) === 0 ||
+                parseInt(filterLote, 10) === 20 ||
+                parseInt(filterLote, 10) === 21 ||
+                parseInt(filterLote, 10) === 22 ||
+                parseInt(filterLote, 10) === 23
+                  ? "Se muestran todos los lotes, por favor seleccione un lote en el mapa"
+                  : `Busqueda por el lote ${filterLote}`}
+              </Typography>
+            </Grid>
+            <Divider variant="middle" />
+            <br />
             <Toolbar>
               <Controls.Input
                 label="Buscar dato"
@@ -217,11 +258,8 @@ const Fumigacion = () => {
                   <TableRow key={item._id}>
                     <TableCell>{item.fullName}</TableCell>
                     <TableCell>{item.lot}</TableCell>
-                    <TableCell>{item.timeFinish}</TableCell>
                     <TableCell>{item.supplies}</TableCell>
                     <TableCell>{item.activeIngredients}</TableCell>
-                    <TableCell>{item.pr}</TableCell>
-                    <TableCell>{item.pc}</TableCell>
                     <TableCell>{item.plague}</TableCell>
                     <TableCell>
                       <Controls.ActionButton
@@ -231,6 +269,15 @@ const Fumigacion = () => {
                         }}
                       >
                         <EditOutlined fontSize="small" />
+                      </Controls.ActionButton>
+                      <Controls.ActionButton
+                        color="primary"
+                        onClick={() => {
+                          openMoreDataModal(item);
+                          console.log(allData);
+                        }}
+                      >
+                        <EventNoteIcon />
                       </Controls.ActionButton>
                       <Controls.ActionButton
                         color="secondary"
@@ -257,13 +304,23 @@ const Fumigacion = () => {
         </Grid>
       </Grid>
       <ModalDialog
-        title="Formulario de usuarios"
+        title="Formulario para la edición de fumigacion"
         openModal={openEditOrAdd}
         setOpenModal={setOpenEditOrAdd}
       >
-        <UserForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
+        <FumigationForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
       </ModalDialog>
+      <ModalDialog
+        title="Información completa"
+        openModal={openMoreData}
+        setOpenModal={setOpenMoreData}
+
+      >
+        <FumigationAllData data={allData} />
+      </ModalDialog>
+
       <Notification notify={notify} setNotify={setNotify} />
+
       <ConfirmDialog
         confirmDialog={confirmDialog}
         setConfirmDialog={setConfirmDialog}

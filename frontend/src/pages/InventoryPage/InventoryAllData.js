@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FumigationForm = () => {
+const InventoryAllData = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const FumigationForm = () => {
     )
 }
 
-export default FumigationForm
+export default InventoryAllData

@@ -1,7 +1,6 @@
-//Imports necesarios
 import React, { Fragment, useState, useEffect } from "react";
-import { FaPoop } from "react-icons/fa";
-import Header from "../components/Header";
+import { FaTree } from "react-icons/fa";
+import Header from "../../components/Header";
 import {
   Grid,
   Paper,
@@ -13,27 +12,27 @@ import {
   InputAdornment,
   Typography,
   Divider,
-  /* Link */
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
-import Controls from "../components/Controls/Control";
-import useTable from "../components/UseTable";
-import {
-  getFertilizationAllAxios,
-  deleteFertilizationAxios,
-  postFertilizationAxios,
-  putFertilizationAxios,
-} from "../services/FertilizationService";
+import Controls from "../../components/Controls/Control";
+import useTable from "../../components/UseTable";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import ModalDialog from "../components/Modals/ModalDialog";
-import FertilizationForm from "./FertilizationForm";
-import Notification from "../components/Notification";
-import ConfirmDialog from "../components/ConfirmDialog";
-import { mapData } from "../components/mapa/mapDataPath";
-import SvgMap from "../components/mapa/svgMap";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import ModalDialog from "../../components/Modals/ModalDialog";
+import SowingForm from "./SowingForm";
+import SowingAllData from "./SowingAllData";
+import Notification from "../../components/Notification";
+import ConfirmDialog from "../../components/ConfirmDialog";
+import { mapData } from "../../components/mapa/mapDataPath";
+import SvgMap from "../../components/mapa/svgMap";
+import {
+  getSowingAllAxios,
+  deleteSowingAxios,
+  postSowingAxios,
+  putSowingAxios,
+} from "../../services/SowingService";
 
 //Estilo individual de la pagina
 const useStyles = makeStyles((theme) => ({
@@ -50,18 +49,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//Columnas que tendra la tabla
-const fertilizationColumns = [
+const sowingColumns = [
   { id: "fullName", label: "Nombre empleado" },
   { id: "lot", label: "Lote" },
-  { id: "equipment", label: "Equipo" },
-  { id: "method", label: "Metodo" },
-  { id: "product", label: "Producto" },
-  { id: "technicalVisit", label: "Visita" },
+  { id: "variety", label: "Variedad" },
+  { id: "vegetableOrigin", label: "Procedencia vegetal" },
+  { id: "totalTrees", label: "Total Arboles" },
+  { id: "distance", label: "Distancia" },
   { id: "actions", label: "Acciones" },
 ];
 
-const Fertilizacion = () => {
+const Sowing = () => {
   //Inicializo los estilos
   const styles = useStyles();
   //Estado que tendra la data a editar
@@ -76,6 +74,8 @@ const Fertilizacion = () => {
   });
   //Estado que me dice si el cuadro de dialogo es para agregar o para editar
   const [openEditOrAdd, setOpenEditOrAdd] = useState(false);
+  const [openMoreData, setOpenMoreData] = useState(false);
+  const [allData, setAllData] = useState(null);
   //Estado que controla la notificacion
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -93,7 +93,7 @@ const Fertilizacion = () => {
 
   //Obtengo los datos de la bd e inicializo el estado de data
   useEffect(() => {
-    getFertilizationAllAxios().then((items) => {
+    getSowingAllAxios().then((items) => {
       setData(items);
     });
   }, [setData]);
@@ -104,7 +104,7 @@ const Fertilizacion = () => {
     TablePaginationCustom,
     TblHead,
     dataAfterPagingAndSorting,
-  } = useTable(data, fertilizationColumns, filterFn);
+  } = useTable(data, sowingColumns, filterFn);
 
   //Busqueda de un dato
   const handleSearch = (e) => {
@@ -120,79 +120,85 @@ const Fertilizacion = () => {
     });
   };
 
-  //Funcion que sirve para saber si el dato es para editar o guardar uno nuevo
-  const addOrEdit = (dataF, resetForm) => {
-    //Si el dato no contiene un id significa que lo debo guardar
-    const newDataF = {
-      _id: dataF._id,
-      fullName: dataF.fullName,
-      equipment: dataF.equipment,
-      lot: dataF.lot,
-      product: dataF.product,
-      technicalVisit: dataF.technicalVisit,
-      method: dataF.method,
-      observation: dataF.observation,
-      composition: {
-        N: dataF.N || "",
-        P2O2: dataF.P2O2 || "",
-        K2O: dataF.K2O || "",
-        CaO: dataF.CaO || "",
-        S: dataF.S || "",
-        Fe: dataF.Fe || "",
-        Mn: dataF.Mn || "",
-        Cu: dataF.Cu || "",
-        Zn: dataF.Zn || "",
-        Mo: dataF.Mo || "",
-        B: dataF.B || "",
+  const addOrEdit = (dataS, resetForm) => {
+    const newDataS = {
+      _id: dataS._id,
+      fullName: dataS.fullName,
+      lot: dataS.lot,
+      variety: dataS.variety,
+      vegetableOrigin: dataS.vegetableOrigin,
+      totalTrees: dataS.totalTrees,
+      distance: dataS.distance,
+      microesentials: {
+        gr: dataS.microesentialsGr,
+        kg: dataS.microesentialsKg,
       },
-      amount: {
-        cc: dataF.cc || "",
-        gr: dataF.gr || "",
-        total: dataF.total || "",
+      Agrocilceo: {
+        gr: dataS.AgrocilceoGr,
+        kg: dataS.AgrocilceoKg,
       },
+      Agrimins: {
+        gr: dataS.AgriminsGr,
+        kg: dataS.AgriminsKg,
+      },
+      calDolomita: {
+        gr: dataS.calDolomitaGr,
+        kg: dataS.calDolomitaKg,
+      },
+      micorrizas: {
+        gr: dataS.micorrizasGr,
+        kg: dataS.micorrizasGr,
+      },
+/*       Organomineral: {
+        gr: dataS.OrganomineralGr,
+        kg: dataS.OrganomineralKg,
+      }, */
     };
-    if (newDataF._id === 0)
-      postFertilizationAxios(newDataF)
+    if (newDataS._id === 0) {
+      postSowingAxios(newDataS)
         .then((response) => {
           setData(data.concat(response));
         })
         .catch((error) => console.log(error));
-    //En caso contrario es para editar un dato
-    else
-      putFertilizationAxios(newDataF, newDataF._id).then((response) => {
+    } else
+      putSowingAxios(newDataS, newDataS._id).then((response) => {
         const newData = data;
-        newData.forEach((fert) => {
-          if (fert._id === response._id) {
-            fert.fullName = response.fullName;
-            fert.equipment = response.equipment;
-            fert.product = response.product;
-            fert.technicalVisit = response.technicalVisit;
+        newData.forEach((sow) => {
+          if (sow._id === response._id) {
+            sow.fullName = response.fullName;
+            sow.lot = response.lot;
+            sow.variety = response.variety;
+            sow.vegetableOrigin = response.vegetableOrigin;
+            sow.totalTrees = response.totalTrees;
+            sow.distance = response.distance;
           }
         });
         setData(newData);
       });
-    //Reseteo el formulario
     resetForm();
     //El dato a editar es nulo
     setDataEdit(null);
     //Cierro el formulario
     setOpenEditOrAdd(false);
     //Obtengo la informacion nuevamente
-    getFertilizationAllAxios().then((dataFert) => {
-      setData(dataFert);
+    getSowingAllAxios().then((dataSow)=>{
+        setData(dataSow);
     });
-    //Envio una notificacion de confirmacion
     setNotify({
-      isOpen: true,
-      message: "Se guardo correctamente",
-      type: "success",
-    });
+        isOpen: true,
+        message: "Se guardo correctamente",
+        type: "success",
+      });
   };
 
   //Funcion que me dice si el dato es para editar
   const openModal = (item) => {
     setDataEdit(item);
-    setOpenEditOrAdd(true);
+    setOpenEditOrAdd(!openEditOrAdd);
+  };
+  const openMoreDataModal = (item) => {
+    setAllData(item);
+    setOpenMoreData(!openMoreData);
   };
 
   //Funcion que me elimina un dato
@@ -203,9 +209,9 @@ const Fertilizacion = () => {
       isOpen: false,
     });
     //Envio el id y hago una peticion delete al backend
-    deleteFertilizationAxios(id);
+    deleteSowingAxios(id);
     //Obtengo los datos nuevamente y actualizo la tabla
-    getFertilizationAllAxios().then((dataF) => {
+    getSowingAllAxios().then((dataF) => {
       setData(dataF);
     });
     //Envio una notificacion para hacerle saber al usuario que se elimino el dato
@@ -215,18 +221,17 @@ const Fertilizacion = () => {
       type: "error",
     });
   };
-  //Vista a renderizar
+
   return (
     <Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Header
-            title="Fertilizacion"
+            title="Siembra"
             subTitle="Administracion fertilizacion de cultivos"
-            icon={<FaPoop />}
+            icon={<FaTree />}
           />
         </Grid>
-        {/* Creo una seccion para pintar el mapa */}
         <Grid container item xs={12} justify="center" alignItems="center">
           {/* Pinto el mapa y le paso las props necasarias */}
           <SvgMap
@@ -243,7 +248,11 @@ const Fertilizacion = () => {
           <Paper className={styles.pageContent}>
             <Grid container item xs={11}>
               <Typography variant="h6" component="h5">
-                {filterLote === 0 || filterLote==20 ||filterLote==21 || filterLote==22 || filterLote==23
+                {filterLote === 0 ||
+                parseInt(filterLote, 10) === 20 ||
+                parseInt(filterLote, 10) === 21 ||
+                parseInt(filterLote, 10) === 22 ||
+                parseInt(filterLote, 10) === 23
                   ? "Se muestran todos los lotes, por favor seleccione un lote en el mapa"
                   : `Busqueda por el lote ${filterLote}`}
               </Typography>
@@ -282,10 +291,10 @@ const Fertilizacion = () => {
                   <TableRow key={item._id}>
                     <TableCell>{item.fullName}</TableCell>
                     <TableCell>{item.lot}</TableCell>
-                    <TableCell>{item.equipment}</TableCell>
-                    <TableCell>{item.method}</TableCell>
-                    <TableCell>{item.product}</TableCell>
-                    <TableCell>{item.technicalVisit}</TableCell>
+                    <TableCell>{item.variety}</TableCell>
+                    <TableCell>{item.vegetableOrigin}</TableCell>
+                    <TableCell>{item.totalTrees}</TableCell>
+                    <TableCell>{item.distance}</TableCell>
                     <TableCell>
                       <Controls.ActionButton
                         color="primary"
@@ -294,6 +303,14 @@ const Fertilizacion = () => {
                         }}
                       >
                         <EditOutlined />
+                      </Controls.ActionButton>
+                      <Controls.ActionButton
+                        color="primary"
+                        onClick={() => {
+                          openMoreDataModal(item);
+                        }}
+                      >
+                        <EventNoteIcon />
                       </Controls.ActionButton>
                       <Controls.ActionButton
                         color="secondary"
@@ -320,11 +337,18 @@ const Fertilizacion = () => {
         </Grid>
       </Grid>
       <ModalDialog
-        title="Formulario de Fertilizacion"
+        title="Formulario de Siembra"
         openModal={openEditOrAdd}
         setOpenModal={setOpenEditOrAdd}
       >
-        <FertilizationForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
+        <SowingForm dataForEdit={dataEdit} addOrEdit={addOrEdit} />
+      </ModalDialog>
+      <ModalDialog
+        title="Información Completa"
+        openModal={openMoreData}
+        setOpenModal={setOpenMoreData}
+      >
+        <SowingAllData data={allData} />
       </ModalDialog>
       <Notification notify={notify} setNotify={setNotify} />
       <ConfirmDialog
@@ -335,4 +359,4 @@ const Fertilizacion = () => {
   );
 };
 
-export default Fertilizacion;
+export default Sowing;
