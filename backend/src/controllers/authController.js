@@ -43,14 +43,15 @@ export const signIn = async (req, res) => {
 
     //Primero verifico si el usuario con la cedula recibida existe
     const userFound = await User.findOne({cc:cedula}).populate("role");
+
     //Si no existe ningun usuario devuelvo el mensaje de que es incorrecto
     if(!userFound) return res.json({message:"El usuario no existe"})
+
     //Comparo la contraseña ingresada con la que se tiene en la BD
     const passwordMatch = await User.comparePassword(password,userFound.password);
 
     //Si la contraseña no coincide mando el mensaje
     if(!passwordMatch) return res.json({message:"Contraseña incorrecta"});
-
     //Creo el token con el id del usuario
     const token = jwt.sign({id:userFound._id}, "hola123",{
         expiresIn: 60 * 60 * 24 * 7,

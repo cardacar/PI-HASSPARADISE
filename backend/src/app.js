@@ -7,6 +7,7 @@ import fumigationRoutes from './routes/fumigationRoutes';
 import inventoryRoutes from './routes/inventoryRoutes'
 import precipitationRoutes from './routes/precipitationRoutes';
 import userAdminRoutes from './routes/userAdminRoutes';
+import sowingRoutes from './routes/sowingRoutes';
 import authRoutes from './routes/authRoutes'
 import pkg from '../package.json'
 import {createRoles} from './libs/initialSetup'
@@ -27,7 +28,8 @@ dotenv.config({path:'./.env'})
 app.use(morgan('dev'));//ver las peticiones que llegan al servidor
 app.use(express.json());//saber leer json
 app.use(express.urlencoded({extended:false}));//obtencion de datos de la url
-app.use(cors({origin:"http://localhost:3000", credentials:true}));//aceptacion de datos desde el frontend
+app.use(cors({origin:"http://localhost:3000", credentials:true}));
+//app.use(cors({origin:"http://localhost:5000", credentials:true}));//aceptacion de datos desde el frontend
 
 //Routes
 app.get('/',(req, res)=>{
@@ -45,6 +47,7 @@ app.use('/api/hpd/inventory', inventoryRoutes);
 app.use('/api/hpd/precipitation', precipitationRoutes);
 app.use('/api/hpd/userAdmin', userAdminRoutes);
 app.use('/api/hpd/auth', authRoutes);
+app.use('/api/hpd/sowing', sowingRoutes);
 
 
 

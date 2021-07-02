@@ -1,10 +1,11 @@
 import fumigation from "../models/fumigationModel";
 
 export const createFumigation = async (req, res) => {
+
   //extraigo los datos del body
   const {
     userId,
-    fullName,
+    Name,
     lot,
     timeFinish,
     supplies,
@@ -23,7 +24,7 @@ export const createFumigation = async (req, res) => {
 
   //creo un objeto gracias al modelo
   const newFumigation = new fumigation({
-    fullName,
+    fullName:Name,
     lot,
     timeFinish,
     supplies,

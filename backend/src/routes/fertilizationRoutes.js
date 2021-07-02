@@ -7,6 +7,7 @@ const router = Router();
 router.post('/', authJwt.verifyToken, fertilizationCtrl.createFertilization);
 
 router.get('/', [authJwt.verifyToken, authJwt.isAdmin], fertilizationCtrl.getFertilizationAll);
+
 router.get('/:fertilizationId',  authJwt.verifyToken, fertilizationCtrl.getFertilizationById);
 
 router.put('/:fertilizationId', authJwt.verifyToken, fertilizationCtrl.updateFertilizationById);
