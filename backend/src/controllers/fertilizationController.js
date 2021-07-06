@@ -54,6 +54,12 @@ export const getFertilizationById = async (req, res) => {
   res.json(getFertilization);
 };
 
+export const getUserFertilization = async(req, res)=>{
+  const {userId} = req.body
+  const userFertilization = await fertilization.find({user:userId})
+  res.json(userFertilization);
+}
+
 //Actualizar datos
 export const updateFertilizationById = async (req, res) => {
   //Extraigo el id de la url

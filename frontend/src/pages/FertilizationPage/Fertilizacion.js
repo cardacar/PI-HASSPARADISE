@@ -92,6 +92,8 @@ const Fertilizacion = () => {
     isOpen: false,
     title: "",
     subTitle: "",
+    viewData: false,
+    dataMap: {}
   });
   //Filtro para saber que lote es el que se esta buscando
   const [filterLote, setFilterLote] = useState(0);

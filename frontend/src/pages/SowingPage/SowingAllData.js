@@ -22,6 +22,10 @@ const useStyles = makeStyles({
       width: "80%",
     },
   },
+  customTypografy:{
+    height:'fit-content',
+    margin: 'auto'
+  }
 });
 
 const SowingAllData = (props) => {
@@ -75,9 +79,11 @@ const SowingAllData = (props) => {
               </Typography>
             </Grid>
             <Grid container item xs={6}>
-              <Typography variant="h6" component="h3">
+              <Typography className={style.customTypografy} variant="h6" component="h6">
                 Insumo aplicados y dosis(gr)
               </Typography>
+
+              <Grid container item xs={12}>
 
               <Typography variant="subtitle2" component="h5">
                 Microesentials
@@ -88,7 +94,7 @@ const SowingAllData = (props) => {
                     className={style.compo}
                     color="textSecondary"
                     align="left"
-                  >
+                    >
                     gr/árbol: {data.microesentials.gr}
                   </Typography>
                 </Grid>
@@ -108,7 +114,7 @@ const SowingAllData = (props) => {
                     className={style.compo}
                     color="textSecondary"
                     align="left"
-                  >
+                    >
                     gr/árbol: {data.Agrocilceo.gr}
                   </Typography>
                 </Grid>
@@ -128,7 +134,7 @@ const SowingAllData = (props) => {
                     className={style.compo}
                     color="textSecondary"
                     align="left"
-                  >
+                    >
                     gr/árbol: {data.Agrimins.gr}
                   </Typography>
                 </Grid>
@@ -148,7 +154,7 @@ const SowingAllData = (props) => {
                     className={style.compo}
                     color="textSecondary"
                     align="left"
-                  >
+                    >
                     gr/árbol: {data.calDolomita.gr}
                   </Typography>
                 </Grid>
@@ -168,7 +174,7 @@ const SowingAllData = (props) => {
                     className={style.compo}
                     color="textSecondary"
                     align="left"
-                  >
+                    >
                     gr/árbol: {data.micorrizas.gr}
                   </Typography>
                 </Grid>
@@ -177,6 +183,7 @@ const SowingAllData = (props) => {
                     gr/árbol: {data.micorrizas.kg}
                   </Typography>
                 </Grid>
+                    </Grid>
               </Grid>
             </Grid>
           </Grid>

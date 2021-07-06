@@ -40,6 +40,8 @@ const SvgMap = (props) => {
                         : `Estas seguro que deseas buscar por el lote ${item.id}`
                     }`,
                     subTitle: "Se mostrara en la tabla de abajo",
+                    viewData: item.viewData,
+                    dataMap: item.data,
                     onConfirm: () => {
                       setConfirmDialog({
                         ...confirmDialog,
