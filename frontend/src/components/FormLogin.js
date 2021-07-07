@@ -1,4 +1,4 @@
-import React, { useState, /* useEffect */ } from "react";
+import React, { useState /* useEffect */ } from "react";
 import useStyles from "../styles/FormLoginStyle.js";
 import {
   Avatar,
@@ -16,34 +16,36 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import palette from "../styles/PaletteColors.js";
 import { useForm } from "react-hook-form";
 import { loginAxios } from "../services/LogIn.js";
-//import { useHistory } from "react-router-dom";
-//import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import Notification from "./Notification.js";
 
 const FormLogin = () => {
   const [loginStatus, setloginStatus] = useState("");
-  //let history = useHistory();
-  //const [logged,setLogged] = useState(false);
+  const [token, setToken] = useState("")
+  const [rol, setRol] = useState("")
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
+  const onSubmit = (data) => {
       const cedula = data.cedula;
       const password = data.password;
-      const {message, token} = await loginAxios(cedula, password);
-      if(token){
+      loginAxios(cedula, password).then((res)=>{
+        if(res.message)
+          setloginStatus(res.message)
+        setToken(res.token)
+        setRol(res.rolUser);
+        window.localStorage.setItem("logInUser", token);
+        window.localStorage.setItem("rolUser", rol);
+      })
+      console.log(rol)
+      /* if (token) {
         setloginStatus("Inicio de sesion correcto");
-        window.localStorage.setItem(
-          'logInUser', token
-        );
-        
-      }
-      
-      setloginStatus(message);
-    } catch (error) {
-      console.log(error);
-      setloginStatus("Error al iniciar sesion");
-    }
+        setloginStatus(message);
+      } */
   };
 
   const styles = useStyles();
@@ -77,7 +79,7 @@ const FormLogin = () => {
                 name="cedula"
                 autoComplete="Cedula"
                 autoFocus
-                color="secondary"
+                color="primary"
                 inputRef={register}
               />
 
@@ -91,7 +93,7 @@ const FormLogin = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                color="secondary"
+                color="primary"
                 inputRef={register}
               />
 
@@ -100,9 +102,19 @@ const FormLogin = () => {
                 fullWidth
                 variant="contained"
                 className={styles.submit}
-                onClick={()=>{
-                  console.log(loginStatus)}
-                }
+                onClick={() => {
+                  loginStatus === ""
+                    ? setNotify({
+                        isOpen: true,
+                        message: loginStatus,
+                        type: "error",
+                      })
+                    : setNotify({
+                      isOpen: true,
+                      message: loginStatus,
+                      type: "success",
+                    });
+                }}
               >
                 Iniciar sesion
               </Button>
@@ -114,13 +126,12 @@ const FormLogin = () => {
                   </Link>
                 </Grid>
               </Grid>
-              <h3>{loginStatus}</h3>
-              
               <Box mt={5}></Box>
             </form>
           </div>
         </Grid>
       </Grid>
+      <Notification notify={notify} setNotify={setNotify} />
     </MuiThemeProvider>
   );
 };

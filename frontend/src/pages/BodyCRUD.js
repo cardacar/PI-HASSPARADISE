@@ -13,17 +13,17 @@ import {
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
-import Controls from "../../components/Controls/Control";
-import Header from "../../components/Header";
-import UseTable from "../../components/UseTable";
+import Controls from "../components/Controls/Control";
+import Header from "../components/Header";
+import UseTable from "../components/UseTable";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EventNoteIcon from "@material-ui/icons/EventNote";
-import ModalDialog from "../../components/Modals/ModalDialog";
-import Notification from "../../components/Notification";
-import ConfirmDialog from "../../components/ConfirmDialog";
-import { mapData } from "../../components/mapa/mapDataPath";
-import SvgMap from "../../components/mapa/svgMap";
+import ModalDialog from "../components/Modals/ModalDialog";
+import Notification from "../components/Notification";
+import ConfirmDialog from "../components/ConfirmDialog";
+import { mapData } from "../components/mapa/mapDataPath";
+import SvgMap from "../components/mapa/svgMap";
 
 
 const useStyles = makeStyles((theme) => ({

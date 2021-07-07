@@ -160,7 +160,7 @@ const SowingAllData = (props) => {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography className={style.compo} color="textSecondary">
-                    gr/árbol: {data.calDolomita.kg}
+                    kg/total: {data.calDolomita.kg}
                   </Typography>
                 </Grid>
               </Grid>

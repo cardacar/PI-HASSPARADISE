@@ -2,7 +2,8 @@ import axios from 'axios';
 
 export const baseUrl = 'http://localhost:3001/api/hpd/'
 
-export const loginAxios = async (cedula,password)=>{
+export const loginAxios = async (user)=>{
+    const {cedula, password} = user;
     
     const response = await axios.post(`${baseUrl}auth/signIn`,{cedula,password})
     if(response.data.message){
@@ -10,5 +11,6 @@ export const loginAxios = async (cedula,password)=>{
         return {message:message}
     }
     const token = response.data.token;
-    return {token:token};
+    const rolUser = response.data.rolUser;
+    return {token:token, rolUser:rolUser};
 }

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyle = makeStyles((theme) => ({
   drawerPaper: {
     width: "inherit",
-    backgroundColor: "#007508",
+    backgroundColor: "#334AB0",
   },
   link: {
     textDecoration: "none",
@@ -20,7 +20,7 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     "&:hover": {
-      backgroundColor: "#00C20D",
+      backgroundColor: "#212F70",
     },
   },
   icons: {
