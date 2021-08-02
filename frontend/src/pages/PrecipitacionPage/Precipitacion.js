@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Control from "../../components/Controls/Control";
 import { getIp } from "../../services/PrecipitacionService";
-import { FaCloudSunRain, FaCloudscale, FaCloudShowersHeavy } from "react-icons/fa";
-import { WiHumidity } from "react-icons/wi";
+import {
+  FaCloudSunRain,
+  FaCloudscale,
+  FaCloudShowersHeavy,
+} from "react-icons/fa";
 import { SiApacheairflow } from "react-icons/si";
 import Header from "../../components/Header";
 import {
@@ -13,9 +15,10 @@ import {
   CardContent,
   CardMedia,
   Paper,
-  Icon,
 } from "@material-ui/core";
 import IconWeatherMoreInfo from "../../components/IconWeatherMoreInfo";
+import Carousel from "react-elastic-carousel";
+
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -79,6 +82,12 @@ const months = {
   11: "Noviembre",
   12: "Diciembre",
 };
+const breakPoints = [
+  { width: 1, itemsToShow: 1 },
+  { width: 550, itemsToShow: 2 },
+  { width: 768, itemsToShow: 3 },
+  { width: 1200, itemsToShow: 4 },
+];
 
 const Precipitacion = () => {
   const styles = useStyles();
@@ -91,9 +100,6 @@ const Precipitacion = () => {
     console.log("effect");
   }, [setData]);
 
-  const getIpClick2 = () => {
-    console.log(data);
-  };
   return (
     <Fragment>
       <Grid container component="main" className={styles.root} spacing={0}>
@@ -150,22 +156,15 @@ const Precipitacion = () => {
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid
-                    container
-                    item
-                    xs={8}
-                    direction="column"
-                  >
-                    
-
+                  <Grid container item xs={8} direction="column">
                     <IconWeatherMoreInfo
                       dataWeather={data.dailyWeather[0].windSpeed}
                       iconWeather={<FaCloudscale />}
                       clasStyle={styles.icon}
                       textdescweather={"Velocidad del viento"}
                       textdescunity={"m/s"}
-                      />
-                      <br/>
+                    />
+                    <br />
                     <IconWeatherMoreInfo
                       dataWeather={data.dailyWeather[0].humidity}
                       iconWeather={<FaCloudShowersHeavy />}
@@ -180,28 +179,6 @@ const Precipitacion = () => {
                       textdescweather={"Presion del viento"}
                       textdescunity={"hPa"}
                     />
-
-                    {/* <div className={styles.icon}>
-                      <Icon fontSize="large">
-                        <WiHumidity />
-                      </Icon>
-                    </div>
-                    <div>
-                      <Typography
-                        className={"MuiTypography--heading"}
-                        variant={"body1"}
-                        gutterBottom
-                      >
-                        Velocidad del viento
-                      </Typography>
-                      <Typography
-                        className={"MuiTypography--heading"}
-                        variant={"body1"}
-                        gutterBottom
-                      >
-                        {data.dailyWeather[0].windSpeed} m/s
-                      </Typography>
-                    </div> */}
                   </Grid>
                   {/* <Grid item xs={6}>
                   <Card className={styles.card}>
@@ -237,12 +214,50 @@ const Precipitacion = () => {
                   </Card>
                 </Grid> */}
                 </Grid>
+                <Paper className={styles.paper} elevation={3}>
+                  <Carousel breakPoints={breakPoints}>
+                    {data.dailyWeather.map((item, index)=>{
+                      {console.log(item)}
+                        return(
+                          <Card className={styles.card} elevation={0} key={index}>
+                        <CardMedia
+                          className={styles.media}
+                          image={`https://openweathermap.org/img/wn/${item.icon}@4x.png`}
+                        />
+                        <CardContent className={styles.content}>
+                          <Typography
+                            className={"MuiTypography--heading"}
+                            variant={"h6"}
+                            gutterBottom
+                          >
+                            {months[item.day.split("-")[1]]}{" "}
+                            {item.day.split("-")[2]} del{" "}
+                            {item.day.split("-")[0]}
+                          </Typography>
+                          <Typography
+                            className={"MuiTypography--subheading"}
+                            variant={"caption"}
+                          >
+                            {translateData[item.dayWeatherDesc]}
+                          </Typography>
+                          <Typography
+                            className={"MuiTypography--heading"}
+                            variant={"h6"}
+                            gutterBottom
+                          >
+                            {item.temp} °C
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                          )
+                    })}
+                    
+                  </Carousel>
+                </Paper>
               </Fragment>
             )}
           </Paper>
         </Grid>
-
-        <Control.Button text="Data" onClick={() => getIpClick2()} />
       </Grid>
     </Fragment>
   );
