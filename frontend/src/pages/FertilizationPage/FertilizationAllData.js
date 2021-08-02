@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 
   pos: {
     marginBottom: 8,
+    
   },
   compo: {
     marginTop: 0,
@@ -22,6 +23,10 @@ const useStyles = makeStyles({
       width: "80%",
     },
   },
+  container:{
+    flexWrap: 'nowrap'
+    
+  }
 });
 
 const FertilizationAllData = (props) => {
@@ -37,7 +42,7 @@ const FertilizationAllData = (props) => {
       <Card className={style.root} variant="outlined">
         <CardContent>
           <Grid container item xs={12}>
-            <Grid container item xs={6} direction="column">
+            <Grid container item xs={6} direction="column" className={style.container}>
               <Typography variant="h6" component="h3">
                 Nombre Completo
               </Typography>
@@ -61,7 +66,7 @@ const FertilizationAllData = (props) => {
               <Typography variant="h6" component="h3">
                 Composición %
               </Typography>
-              <Grid container item xs={6}>
+              <Grid container item xs={6} className={style.container}>
                 <Grid item xs={6}>
                   <Typography
                     className={style.compo}

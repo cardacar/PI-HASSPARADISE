@@ -46,6 +46,7 @@ export const signIn = async (req, res) => {
 
     //Si no existe ningun usuario devuelvo el mensaje de que es incorrecto
     if(!userFound) return res.json({message:"El usuario no existe"})
+    const rolUser = userFound.role[0].name
 
     //Comparo la contraseña ingresada con la que se tiene en la BD
     const passwordMatch = await User.comparePassword(password,userFound.password);
@@ -57,6 +58,6 @@ export const signIn = async (req, res) => {
         expiresIn: 60 * 60 * 24 * 7,
     })
     //Si todo es correcto envio el token con los  datos del usuario
-    res.json({token})
+    res.json({token, rolUser})
   
 };

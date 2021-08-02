@@ -8,6 +8,8 @@ router.post('/', authJwt.verifyToken, fumigationCtrl.createFumigation);
 
 router.get('/', [authJwt.verifyToken, authJwt.isAdmin] , fumigationCtrl.getAllFumigation);
 
+router.get('/user', authJwt.verifyToken, fumigationCtrl.getUserFumigation);
+
 router.get('/:fumigationId',authJwt.verifyToken ,fumigationCtrl.deleteFumigationById);
 
 router.put('/:fumigationId', authJwt.verifyToken, fumigationCtrl.updateFumigationById);

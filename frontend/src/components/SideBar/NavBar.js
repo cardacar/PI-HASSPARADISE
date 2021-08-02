@@ -22,8 +22,9 @@ import FertilizationPageCrud from "../../pages/FertilizationPage/FertilizationPa
 import FumigationPageCrud from "../../pages/FumigationPage/FumigationPageCrud";
 import SowingPageCrud from "../../pages/SowingPage/SowingPageCrud";
 import Inventario from "../../pages/Inventario";
-import Precipitacion from "../../pages/Precipitacion";
+import Precipitacion from "../../pages/PrecipitacionPage/Precipitacion";
 import WelcomePage from "../../pages/Welcome/WelcomePage";
+import ReportPage from "../../pages/ReportPage/ReportPage";
 
 
 const NavBar = () => {
@@ -92,6 +93,9 @@ const NavBar = () => {
             </Route>
             <Route exact path="/admin/Inventario"  >
               <Inventario userRol={userRol}/>
+            </Route>
+            <Route exact path="/admin/Reportes" >
+              <ReportPage userRol={userRol}/>
             </Route>
             <Route exact path="/user/Inventario" >
               <Inventario userRol={userRol}/>

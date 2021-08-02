@@ -51,6 +51,11 @@ export const getAllFumigation = async (req, res) => {
   //Envio los datos obtenidos como respuesta
   res.json(allfumigation);
 };
+export const getUserFumigation = async(req, res)=>{
+  const {userId} = req.body
+  const userfumigation = await fumigation.find({user:userId})
+  res.json(userfumigation);
+}
 
 export const getAllFumigationById = async (req, res) => {
   const { fumigationId } = req.params;

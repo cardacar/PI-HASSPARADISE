@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 const FumigationAllData = (props) => {
   const { data } = props;
   const styles = useStyles();
-  console.log(data);
+
   return (
     <Fragment>
       <Typography className={styles.pos} color="textSecondary">

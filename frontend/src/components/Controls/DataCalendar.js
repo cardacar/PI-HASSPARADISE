@@ -18,6 +18,7 @@ const DataCalendar = (props) => {
                 name={name}
                 value={value}
                 onChange={date => onChange(convertToDefEvent(name,date))}
+                defaultValue="05/24/2017T10:30"
             />
         </MuiPickersUtilsProvider>
     )

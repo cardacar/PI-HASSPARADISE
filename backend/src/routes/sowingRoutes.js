@@ -6,7 +6,9 @@ const router = Router();
 
 router.post('/', authJwt.verifyToken, sowingCtrl.createSowing);
 
-router.get('/',[authJwt.verifyToken, authJwt.verifyToken], sowingCtrl.getSowingAll);
+router.get('/',[authJwt.verifyToken, authJwt.isAdmin], sowingCtrl.getSowingAll);
+router.get('/user', authJwt.verifyToken, sowingCtrl.getUserSowing)
+
 router.get('/:sowingId', authJwt.verifyToken, sowingCtrl.getSowingById)
 
 router.put('/:sowingId', authJwt.verifyToken, sowingCtrl.updateSowingById);

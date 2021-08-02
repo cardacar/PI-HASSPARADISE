@@ -3,8 +3,6 @@ import * as precipitationCtrl from '../controllers/precipitationController';
 
 const router = Router();
 
-router.get('/',(req,res)=>{
-    res.json({success:'precipitation'})
-})
+router.get('/', precipitationCtrl.getPrecipitation);
 
 export default router;

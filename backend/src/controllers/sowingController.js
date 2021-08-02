@@ -51,6 +51,12 @@ export const getSowingById = async(req, res)=>{
 
 }
 
+export const getUserSowing = async(req, res)=>{
+    const {userId} = req.body
+    const usersowing = await sowing.find({user:userId})
+    res.json(usersowing);
+  }
+
 export const updateSowingById = async(req, res)=>{
     const {sowingId} = req.params;
     const updateSowing = await sowing.findByIdAndUpdate(

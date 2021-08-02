@@ -1,6 +1,9 @@
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import GroupWorkIcon from "@material-ui/icons/GroupWork";
+//import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import {FaBong, FaTree, FaPoop, FaDollyFlatbed, FaSignOutAlt, FaCloudSunRain} from 'react-icons/fa'
+//import {GiEnergyArrow} from 'react-icons/gi'
 import React from 'react'
 
 //array de obtjetos que contendran la data del sidebar
@@ -41,13 +44,18 @@ export const SidebarData = [
         link: "/admin/Precipitacion"
     },
     {
+        title:"Reportes",
+        icon: <AssessmentIcon/>,
+        link:"/admin/Reportes"
+    },
+    {
         title:"Cerrar sesion",
         icon: <FaSignOutAlt/>,
         link:"/admin/Precipitacion"
     },
-    {
+    /* {
         title:"Enfermedades",
-        icon: <FaSignOutAlt/>,
+        icon: <GiEnergyArrow/>,
         link:"/admin/Precipitacion"
     },
     {
@@ -89,7 +97,7 @@ export const SidebarData = [
         title:"Monitoreo",
         icon: <FaSignOutAlt/>,
         link:"/admin/Precipitacion"
-    },
+    }, */
 ]
 export const SidebarDataUser = [
     {

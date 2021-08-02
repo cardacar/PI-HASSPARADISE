@@ -8,6 +8,7 @@ import inventoryRoutes from './routes/inventoryRoutes'
 import precipitationRoutes from './routes/precipitationRoutes';
 import userAdminRoutes from './routes/userAdminRoutes';
 import sowingRoutes from './routes/sowingRoutes';
+import reportRoutes from './routes/reportRoutes';
 import authRoutes from './routes/authRoutes'
 import pkg from '../package.json'
 import {createRoles} from './libs/initialSetup'
@@ -48,6 +49,7 @@ app.use('/api/hpd/precipitation', precipitationRoutes);
 app.use('/api/hpd/userAdmin', userAdminRoutes);
 app.use('/api/hpd/auth', authRoutes);
 app.use('/api/hpd/sowing', sowingRoutes);
+app.use('/api/hpd/report', reportRoutes);
 
 
 

@@ -8,7 +8,7 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Paper 
+  Paper,
 } from "@material-ui/core";
 import Aguacate from "../../img/AguacateWelcome.png";
 
@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    '& .MuiCardMedia-img':{
-      objectFit:'contain'
-    }
+    "& .MuiCardMedia-img": {
+      objectFit: "contain",
+    },
   },
 }));
 
@@ -40,31 +40,32 @@ const WelcomePage = () => {
         <Grid
           container
           direction="column"
-          justifyContent="center"
+          justifycontent="center"
           alignItems="center"
         >
           <Paper className={styles.paper} elevation={0}>
-          <Card elevation={0}>
-      
-        <CardContent>
-          <Typography gutterBottom variant="h3" component="h2" align='center'>
-            Hassparadisse
-          </Typography>
-
-        </CardContent>
-        <CardMedia
-          component="img"
-          alt="Aguacate"
-          height="340"
-          width="940"
-          image={Aguacate}
-          title="Aguacate"
-          className={styles.image}
-        />
-      
-    </Card>
+            <Card elevation={0}>
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  variant="h3"
+                  component="h2"
+                  align="center"
+                >
+                  Hassparadise
+                </Typography>
+              </CardContent>
+              <CardMedia
+                component="img"
+                alt="Aguacate"
+                height="340"
+                width="940"
+                image={Aguacate}
+                title="Aguacate"
+                className={styles.image}
+              />
+            </Card>
           </Paper>
-
         </Grid>
       </Grid>
     </Fragment>

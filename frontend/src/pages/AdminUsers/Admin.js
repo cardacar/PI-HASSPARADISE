@@ -166,8 +166,8 @@ const Admin = () => {
           />
         </Grid>
 
-        <Grid item xs={12}>
-          <Paper className={styles.pageContent}>
+        <Grid item xs={12} spacing={0}>
+          <Paper className={styles.pageContent} >
             <Toolbar>
               <Controls.Input
                 label="Buscar usuario"
