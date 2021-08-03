@@ -17,19 +17,20 @@ const app = express();
 
 //Creacion de roles iniciales
 createRoles();
+//Variables de entorno
+dotenv.config({path:'./.env'})
 //Port
 app.set('port', process.env.PORT || 3001)
 
 //package json
 app.set('pkg', pkg)
-//Variables de entorno
-dotenv.config({path:'./.env'})
+
 
 //Middleware
 app.use(morgan('dev'));//ver las peticiones que llegan al servidor
 app.use(express.json());//saber leer json
 app.use(express.urlencoded({extended:false}));//obtencion de datos de la url
-app.use(cors({origin:"http://localhost:3000", credentials:true}));
+app.use(cors({origin:process.env.URL_CREDENTIALS_TRUE?process.env.URL_CREDENTIALS_TRUE: "http://localhost:3000", credentials:true}));
 //app.use(cors({origin:"http://localhost:5000", credentials:true}));//aceptacion de datos desde el frontend
 
 //Routes
