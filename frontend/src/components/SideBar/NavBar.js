@@ -3,7 +3,6 @@ import { SidebarData, SidebarDataUser } from "./SidebarData";
 //import { MuiThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 //import palette from "../../styles/PaletteColors";
-import useStyle from "../../styles/NavbarStyle";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,15 +15,50 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  makeStyles
 } from "@material-ui/core";
 import Admin from "../../pages/AdminUsers/Admin";
 import FertilizationPageCrud from "../../pages/FertilizationPage/FertilizationPageCrud";
 import FumigationPageCrud from "../../pages/FumigationPage/FumigationPageCrud";
 import SowingPageCrud from "../../pages/SowingPage/SowingPageCrud";
-import Inventario from "../../pages/Inventario";
 import Precipitacion from "../../pages/PrecipitacionPage/Precipitacion";
 import WelcomePage from "../../pages/Welcome/WelcomePage";
 import ReportPage from "../../pages/ReportPage/ReportPage";
+import Inventory from '../../pages/InventoryPage/Inventory';
+
+const useStyle = makeStyles((theme) => ({
+  drawerPaper: {
+    width: "inherit",
+    backgroundColor: "#334AB0",
+  },
+  link: {
+    textDecoration: "none",
+    color: "#fff",
+  },
+  row: {
+    width: "100%",
+    height: "3.125rem",
+    listStyleType: "none",
+    margin: "0",
+    display: "flex",
+    flexDirection: "row",
+    color: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    "&:hover": {
+      backgroundColor: "#212F70",
+    },
+  },
+  icons: {
+    flex: "30%",
+    display: "grid",
+    placeItems: "center",
+    color: "#000",
+  },
+  title: {
+    flex: "60%",
+  },
+}));
 
 
 const NavBar = () => {
@@ -92,20 +126,15 @@ const NavBar = () => {
               <FumigationPageCrud userRol={userRol}/>
             </Route>
             <Route exact path="/admin/Inventario"  >
-              <Inventario userRol={userRol}/>
+              <Inventory userRol={userRol}/>
             </Route>
             <Route exact path="/admin/Reportes" >
               <ReportPage userRol={userRol}/>
             </Route>
-            <Route exact path="/user/Inventario" >
-              <Inventario userRol={userRol}/>
-            </Route>
             <Route exact path="/admin/Precipitacion" >
               <Precipitacion userRol={userRol}/>
             </Route>
-            <Route exact path="/user/Precipitacion" >
-              <Precipitacion userRol={userRol}/>
-            </Route>
+            
             <Route exact path="/logOut">
 
             </Route>

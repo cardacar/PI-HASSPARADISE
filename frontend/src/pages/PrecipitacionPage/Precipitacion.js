@@ -19,7 +19,6 @@ import {
 import IconWeatherMoreInfo from "../../components/IconWeatherMoreInfo";
 import Carousel from "react-elastic-carousel";
 
-
 const useStyles = makeStyles((theme) => ({
   image: {
     "& .MuiCardMedia-img": {
@@ -97,7 +96,7 @@ const Precipitacion = () => {
     getIp().then((element) => {
       setData(element);
     });
-    console.log("effect");
+
   }, [setData]);
 
   return (
@@ -107,7 +106,7 @@ const Precipitacion = () => {
           <Grid item xs={12}>
             <Header
               title="Precipitación"
-              subTitle="En esta pagina podrá visualizar el clima en la finca"
+              subTitle="En esta pagina podrá visualizar el clima en la finca San Luis en Abejorral-Antioquia"
               icon={<FaCloudSunRain />}
             />
           </Grid>
@@ -121,10 +120,10 @@ const Precipitacion = () => {
                 <Grid
                   container
                   direction="row"
-                  justifyContent="center"
+                  justifycontent="center"
                   alignItems="center"
                 >
-                  <Grid item xs={4}>
+                  <Grid item xs>
                     <Card className={styles.card} elevation={0}>
                       <CardMedia
                         className={styles.media}
@@ -156,7 +155,7 @@ const Precipitacion = () => {
                       </CardContent>
                     </Card>
                   </Grid>
-                  <Grid container item xs={8} direction="column">
+                  <Grid container item xs direction="column">
                     <IconWeatherMoreInfo
                       dataWeather={data.dailyWeather[0].windSpeed}
                       iconWeather={<FaCloudscale />}
@@ -180,78 +179,44 @@ const Precipitacion = () => {
                       textdescunity={"hPa"}
                     />
                   </Grid>
-                  {/* <Grid item xs={6}>
-                  <Card className={styles.card}>
-                  <CardMedia
-                  className={styles.media}
-                  image={`https://openweathermap.org/img/wn/${data.dailyWeather[0].icon}@4x.png`}
-                  />
-                    <CardContent className={styles.content}>
-                      <Typography
-                        className={"MuiTypography--heading"}
-                        variant={"h6"}
-                        gutterBottom
-                        >
-                        {months[data.dailyWeather[0].day.split("-")[1]]}{" "}
-                        {data.dailyWeather[0].day.split("-")[2]} del{" "}
-                        {data.dailyWeather[0].day.split("-")[0]}
-                      </Typography>
-                      <Typography
-                        className={"MuiTypography--subheading"}
-                        variant={"caption"}
-                        >
-                        {translateData[data.dailyWeather[0].dayWeatherDesc]}
-                      </Typography>
-
-                      <Typography
-                        className={"MuiTypography--heading"}
-                        variant={"h6"}
-                        gutterBottom
-                        >
-                        {data.dailyWeather[0].temp} °C
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid> */}
                 </Grid>
                 <Paper className={styles.paper} elevation={3}>
                   <Carousel breakPoints={breakPoints}>
-                    {data.dailyWeather.map((item, index)=>{
-                      {console.log(item)}
-                        return(
-                          <Card className={styles.card} elevation={0} key={index}>
-                        <CardMedia
-                          className={styles.media}
-                          image={`https://openweathermap.org/img/wn/${item.icon}@4x.png`}
-                        />
-                        <CardContent className={styles.content}>
-                          <Typography
-                            className={"MuiTypography--heading"}
-                            variant={"h6"}
-                            gutterBottom
-                          >
-                            {months[item.day.split("-")[1]]}{" "}
-                            {item.day.split("-")[2]} del{" "}
-                            {item.day.split("-")[0]}
-                          </Typography>
-                          <Typography
-                            className={"MuiTypography--subheading"}
-                            variant={"caption"}
-                          >
-                            {translateData[item.dayWeatherDesc]}
-                          </Typography>
-                          <Typography
-                            className={"MuiTypography--heading"}
-                            variant={"h6"}
-                            gutterBottom
-                          >
-                            {item.temp} °C
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                          )
+                    {data.dailyWeather.map((item, index) => {
+                      
+                      return (
+                        <Card className={styles.card} elevation={0} key={index}>
+                          <CardMedia
+                            className={styles.media}
+                            image={`https://openweathermap.org/img/wn/${item.icon}@4x.png`}
+                          />
+                          <CardContent className={styles.content}>
+                            <Typography
+                              className={"MuiTypography--heading"}
+                              variant={"h6"}
+                              gutterBottom
+                            >
+                              {months[item.day.split("-")[1]]}{" "}
+                              {item.day.split("-")[2]} del{" "}
+                              {item.day.split("-")[0]}
+                            </Typography>
+                            <Typography
+                              className={"MuiTypography--subheading"}
+                              variant={"caption"}
+                            >
+                              {translateData[item.dayWeatherDesc]}
+                            </Typography>
+                            <Typography
+                              className={"MuiTypography--heading"}
+                              variant={"h6"}
+                              gutterBottom
+                            >
+                              {item.temp} °C
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      );
                     })}
-                    
                   </Carousel>
                 </Paper>
               </Fragment>

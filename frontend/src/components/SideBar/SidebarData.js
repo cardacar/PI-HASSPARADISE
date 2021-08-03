@@ -51,7 +51,7 @@ export const SidebarData = [
     {
         title:"Cerrar sesion",
         icon: <FaSignOutAlt/>,
-        link:"/admin/Precipitacion"
+        link:"/admin/LogOut"
     },
     /* {
         title:"Enfermedades",

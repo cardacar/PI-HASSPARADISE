@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import Header from "../../components/Header";
 import { Grid, makeStyles, Paper} from "@material-ui/core";
 import Controls from "../../components/Controls/Control";
 import { useForm, Form } from "../../components/Form";
 import * as ReportService from "../../services/ReportsService";
-
+import ReportPageFumigation from './ReportPageFumigation'
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "40vh",
@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ReportPage = () => {
   const styles = useStyles();
+  const [data, setData] = useState(null);
+  const [renderReport, setRenderReport] = useState(false)
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     
@@ -51,10 +53,16 @@ const ReportPage = () => {
         date2: values.date2
       }
       ReportService.getReportAxios(data).then((response) => {
-        console.log(response)
+        setData(response.report)
       })
+      setRenderReport(!renderReport)
+
     }
   };
+  
+  const downloadSubmit =()=>{
+    
+  }
 
   return (
     <Fragment>
@@ -123,9 +131,15 @@ const ReportPage = () => {
               </Grid>
               <div>
                 <Controls.Button type="submit" text="Generar" />
+                <Controls.Button text="Descargar" onClick={()=>downloadSubmit()}/>
+              </div>
+              <div>
               </div>
             </Form>
           </Paper>
+          {
+            renderReport ? <ReportPageFumigation data={data}/>:""
+          }
         </Grid>
       </Grid>
     </Fragment>

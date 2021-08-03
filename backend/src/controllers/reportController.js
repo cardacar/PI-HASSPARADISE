@@ -97,7 +97,7 @@ export const getReportFertilizationForLot = async (req, res) => {
         total,
       };
 
-      const fertilizationForReport = {
+      const report = {
         composition,
         amount,
         employees: namesUniques,
@@ -110,7 +110,7 @@ export const getReportFertilizationForLot = async (req, res) => {
         date2,
         section: "Fertilizacion",
       };
-      res.send({ fertilizationForReport });
+      res.send({ report });
     } else if (module == "fumigation") {
       const dataModule = await fumigation.find({
         lot: lot,
@@ -155,7 +155,7 @@ export const getReportFertilizationForLot = async (req, res) => {
         activeIngredientUniques = [...activeIngredientUniquesSet],
         suppliesUniques = [...suppliesUniquesSet];
 
-      let fumigationForReport = {
+      let report = {
         plagueLot: plagueUniques,
         namesU: namesUniques,
         activeIngredientU: activeIngredientUniques,
@@ -169,7 +169,7 @@ export const getReportFertilizationForLot = async (req, res) => {
         date2,
       };
 
-      res.send({ fumigationForReport });
+      res.send({ report });
     } else if (module == "sowing") {
       const dataModule = await sowing.find({
         lot: lot,
@@ -226,7 +226,7 @@ export const getReportFertilizationForLot = async (req, res) => {
         varietyUniques = [...varietyUniquesSet],
         originVegetalUniques = [...originVegetalUniquesSet];
 
-      let sowingForReports = {
+      let report = {
         name: namesUniques,
         variety: varietyUniques,
         originVegetal: originVegetalUniques,
@@ -255,7 +255,7 @@ export const getReportFertilizationForLot = async (req, res) => {
           kg: microesentialsKg,
         },
       };
-      res.send({ sowingForReports });
+      res.send({ report });
     }
   } else {
     res.send({ message: "Opcion para generar un reporte de todos los lotes" });

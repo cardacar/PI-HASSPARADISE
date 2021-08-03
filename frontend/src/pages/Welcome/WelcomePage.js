@@ -10,7 +10,7 @@ import {
   CardMedia,
   Paper,
 } from "@material-ui/core";
-import Aguacate from "../../img/AguacateWelcome.png";
+import Aguacate from "../../img/hpd.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +29,7 @@ const WelcomePage = () => {
     <Fragment>
       <Grid container component="main" className={styles.root} spacing={0}>
         <Grid container spacing={0}>
-          <Grid item xs={12}>
+          <Grid item xs={5} sm={12} md={12} >
             <Header
               title="Bienvenido a la pagina de HASSPARADISE"
               subTitle="En esta pagina padra realizar las actividades diarias"
