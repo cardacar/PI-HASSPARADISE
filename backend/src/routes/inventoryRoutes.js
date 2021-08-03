@@ -3,14 +3,14 @@ import * as inventoryCtrl from '../controllers/inventoryController';
 import {authJwt} from '../middleware'
 const router = Router();
 
-router.get('/', authJwt.verifyToken, inventoryCtrl.createInventory);
+router.post('/',[authJwt.verifyToken, authJwt.isAdmin], inventoryCtrl.createInventory);
 
 router.get('/',[authJwt.verifyToken, authJwt.isAdmin], inventoryCtrl.getAllInventory);
-router.get('/:inventoryId', authJwt.verifyToken, inventoryCtrl.getInventoryById);
+router.get('/:inventoryId', [authJwt.verifyToken, authJwt.isAdmin], inventoryCtrl.getInventoryById);
 
-router.put('/:inventoryId', authJwt.verifyToken, inventoryCtrl.updateInventoryById);
+router.put('/:inventoryId', [authJwt.verifyToken, authJwt.isAdmin], inventoryCtrl.updateInventoryById);
 
-router.delete('/:inventoyId', authJwt.verifyToken, inventoryCtrl.deleteInventoryById);
+router.delete('/:inventoryId', [authJwt.verifyToken, authJwt.isAdmin], inventoryCtrl.deleteInventoryById);
 
 
 export default router;
