@@ -264,7 +264,7 @@ const Inventory = () => {
         </Grid>
       </Grid>
       <ModalDialog
-        title="Formulario de Fertilizacion"
+        title="Formulario de inventario"
         openModal={openEditOrAdd}
         setOpenModal={setOpenEditOrAdd}
       >

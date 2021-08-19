@@ -46,17 +46,17 @@ const ReportPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const data = {
+      const dataSend = {
         module: values.module,
         lot: values.lot,
         date1: values.date1,
         date2: values.date2
       }
-      ReportService.getReportAxios(data).then((response) => {
+      ReportService.getReportAxios(dataSend).then((response) => {
         setData(response.report)
       })
       setRenderReport(!renderReport)
-
+      console.log(data)
     }
   };
   
@@ -131,14 +131,15 @@ const ReportPage = () => {
               </Grid>
               <div>
                 <Controls.Button type="submit" text="Generar" />
-                <Controls.Button text="Descargar" onClick={()=>downloadSubmit()}/>
+                {/* <Controls.Button text="Descargar" onClick={()=>downloadSubmit()}/> */}
               </div>
               <div>
               </div>
             </Form>
           </Paper>
           {
-            renderReport ? <ReportPageFumigation data={data}/>:""
+            
+            data!==null ? <ReportPageFumigation data={data}/>:""
           }
         </Grid>
       </Grid>
